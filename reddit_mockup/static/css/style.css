@@ -1,0 +1,23 @@
+.all-forums-title-pos {
+    position: relative; 
+    top:-30px; 
+}
+
+.all-forums-title {
+    color: ghostwhite; 
+    text-shadow:2px 2px 4px gray;
+    letter-spacing: 0.5px;
+}
+
+.growing-pos {
+    position: relative; 
+    top:-30px; 
+}
+
+.growing {
+    color:ghostwhite; 
+    text-shadow:2px 2px 4px gray; 
+    letter-spacing:0.5px;
+}
+
+.fit { object-fit:cover; }

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<!-- Top bar Subreddits -->
+<div class="bg-image">
+	<img class="w-100 fit" height="100" src="{{ subreddit.photo.url }}" alt="">
+</div>
+<div class="px-5 bg-white">
+	<div class="d-flex">
+		<img class="border rounded-circle border-white border-10 growing-pos bg-white mb-2" height="100" src="{% static 'img/avatar.png' %}" alt="">
+		<div class="mt-4 mb-2 pl-3 d-flex w-100">
+			<div class="pr-5">
+				<h1>{{ subreddit.title }}</h1>
+				<h5 class="font-weight-normal text-secondary">/{{ subreddit.slug }}</h5>
+			</div>
+			<!-- Make if statement to change button from 'Leave' to 'Joined' when user is part of the forum -->
+			<button class="align-self-start btn btn-outline-dark btn-lg font-weight-light col-2" type="button" href="#">Leave</button>
+
+		</div>
+	</div>
+</div>
+
+<!-- Flex box -->
+<div class="d-flex justify-content-between m-4">
+  <div class="container col-8 pl-0 pr-4">
+
+    <!-- Breadcrumbs -->
+    {% include 'partials/_breadc.html' %}
+    <!-- All posts from DB -->
+    {% include 'partials/_posts.html' %}
+
+  </div>
+	
+
+	<!-- All communites top bar -->
+	<div class="container col-4 p-0 rounded bg-white align-self-start">
+		<div class="p-0 rounded-top bg-info" width="100%" >
+			<h5 class="p-3 let-sp" height="100">About Community</h5>
+		</div>
+		<div class="px-4 pt-4">
+			<p class="pb-2">{{ subreddit.description }}</p>
+			<h6 class="font-weight-light border-top pt-3 m-0"><img class="mr-2" src="{% static 'img/cakeday.png' %}" height="30">Created {{ subreddit.custom_pub_date }}</h6>
+		</div>
+    <div class="py-3 px-4">
+      <button class="btn btn-info col-12 text-uppercase font-weight-bold" type="button" href="#">Create Post</button>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

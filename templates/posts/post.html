@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="container p-0">
+	<div class="bg-gray px-5">
+		<div class="d-flex">
+			<img class="border rounded-circle border-white border-10 bg-white my-3" height="50" src="{% static 'img/avatar.png' %}" alt="">
+			<div class="mt-4 mb-2 pl-3 d-flex w-100">
+				<div class="pr-5 text-white">
+					<h2 class="font-weight-light"><a class="no-link" href="{% url 'subreddit' post.subreddit.id %}">/{{ post.subreddit }}</a></h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="">
+		<div class="d-flex bg-dark text-light py-2 px-5">
+			&#124; <a class="highlight-bg-dark align-center" href="#">
+				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+			</a> 
+			<p class="m-0 px-2">4.4k</p> &#124;
+			<p class="pl-4 m-0 font-weight-light">{{ post.custom_title }}</p>
+		</div>
+		<div class="bg-gray-2 px-5 py-4">
+			<div class="p-3 border rounded bg-white col-10 ">
+				<div class="d-flex">
+					<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-start justify-content-start">
+						<a class="pb-1 highlight-bg" href="#">
+							<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+						</a>
+						4.4k
+					</div>
+					<div>
+						<div class="text-secondary pr-5">
+							Posted by <a class="pr-4 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}"><img height="15" src="{% static 'img/clock.png' %}"> {{ post.pub_date | naturaltime }}</a>
+							<h4 class="m-0 pt-1 pb-3 text-dark">{{ post.title }}</h4>
+						</div>
+						{% if post.photo %}
+						<img class="mx-auto d-block pr-0" src="{{ post.photo.url }}">
+						{% endif %}
+						{% if post.content %}
+						<p class="pr-5 pt-4"> {{ post.content }}</p>
+						{% endif %}
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div> 
+</div>
+
+{% endblock %}

@@ -21,3 +21,28 @@
 }
 
 .fit { object-fit:cover; }
+
+.highlight-border:hover { border-color: rgb(156, 156, 156) !important; }
+
+.highlight-bg:hover { 
+    background-color: rgb(177, 248, 195); 
+    border-radius: 3px;
+}
+
+.highlight-bg-dark:hover { 
+    background-color: rgb(228, 248, 233); 
+    border-radius: 3px;
+}
+
+.no-link, .no-link-highlight {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.no-link-highlight:hover, .no-link-highlight-2:hover {
+    background-color: rgb(235, 235, 235);
+    border-radius: 3px;
+}
+
+.bg-gray { background-color: rgb(158, 171, 185); }
+.bg-gray-2 { background-color: #DAE0E6; }

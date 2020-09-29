@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 class Subreddit(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     slug = models.SlugField(max_length=30)
+    # slug = AutoSlugField(populate_from='title', always_update=True)
+
+    avatar = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     title = models.CharField(max_length=80)
     description = models.TextField(blank=True)
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
@@ -15,5 +18,5 @@ class Subreddit(models.Model):
     def __str__(self):
         return self.slug
     
-    def custome_pub_date(self):
+    def custom_pub_date(self):
         return self.pub_date.strftime('%e %b %Y')

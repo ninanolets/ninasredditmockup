@@ -16,19 +16,9 @@
 
   </div>
 	
-  <!-- All communites top bar-->
-  <div class="container col-4 p-0 border rounded bg-white align-self-start">
-    <div>
-      <img class="rounded-top bg-image fit" src="{% static 'img/bg-growing.jpeg' %}" alt="Growing communities background" width="100%" height="100">
-      <h5 class="mx-3 growing growing-pos">Today's Top Growing Communities</h5>
-    </div>
+  <!-- All communites -->
+  {% include 'partials/_subreddits.html' %}
 
-    <!-- All communites from DB -->
-    <div class="mx-3 growing-pos">All communities from DB</div>
-    <div class="py-3 px-4">
-      <button class="btn btn-info col-12 text-uppercase" type="button" href="#">View All</button>
-    </div>
-  </div>
 
 </div>
 

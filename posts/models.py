@@ -23,3 +23,4 @@ class Post(models.Model):
         if len(self.title) > 40:
             return self.title[:40] + "..." 
         return self.title
+

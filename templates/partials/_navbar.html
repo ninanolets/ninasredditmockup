@@ -1,16 +1,21 @@
 <!-- Fixed navbar -->
 {% load static %}
 <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-white px-5">
+	
 	<a class="navbar-brand navbar-nav mr-auto text-dark d-inline-block align-top" href="{% url 'index' %}">
 		<img src="{% static 'img/reddit-logo-orange.png' %}" class="logo px-2" alt="reddit logo" height="40" >
 		Home</a>
 	
 	<a class="nav-link" href="#"><img src="{% static 'img/up-arrow.png' %}" height="25"></a>
-	<a class="nav-link ml-3" href="#"><img src="{% static 'img/rise.png' %}" height="27"></a>
-	<a class="nav-link mr-4 ml-3" href="#"><img src="{% static 'img/message.png' %}" height="30"></a>
+	<a class="nav-link" href="#"><img src="{% static 'img/rise.png' %}" height="27"></a>
+	<a class="nav-link" href="#"><img src="{% static 'img/message.png' %}" height="30"></a>
 
-	<form class="form-inline mt-2 mt-md-0">
+	<form class="form-inline mt-2 mt-md-0 px-5">
 		<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 		<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
 	</form>
+
+	<a class="nav-link no-link-highlight" href="#">Sign Up</a>
+	<a class="nav-link no-link-highlight" href="#">Log In</a>
+
 </nav>

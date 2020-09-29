@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     
     'django.contrib.humanize',
 
-    'pages.apps.PagesConfig',
     'subreddits.apps.SubredditsConfig',
     'posts.apps.PostsConfig',
 ]

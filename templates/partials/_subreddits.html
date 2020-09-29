@@ -1,0 +1,25 @@
+{% load static %}
+
+<!-- All communites top bar-->
+<div class="container col-4 p-0 border rounded bg-white align-self-start">
+	<div class="bg-image">
+		<img class="rounded-top fit" src="{% static 'img/bg-growing.jpeg' %}" alt="Growing communities background" width="100%" height="100">
+		<h5 class="mx-3 my-0 pb-1 growing growing-pos">Today's Top Growing Communities</h5>
+	</div>
+
+	<!-- All communites from DB -->
+	{% for subreddit in subreddits %}
+	<a class="growing-pos no-link bg-white py-3 px-4 row m-0 border-top font-weight-light" href="{% url 'subreddit' subreddit.id %}">
+		<img src="{% static 'img/up.png' %}" class=" pr-3 align-self-center" height="15">
+		<img class="fit bg-white border rounded-circle" height="40" width="40"
+			{% if subreddit.avatar %} src="{{ subreddit.avatar.url }}"
+			{% else %} src="{% static 'img/avatar-gray.png' %}"
+			{% endif %}>
+		<h6 class="m-0 pl-3 align-self-center">/{{ subreddit }}</h6>
+	</a>
+	{% endfor %}
+
+	<div class="pb-3 px-4">
+		<a class="btn btn-info col-12 text-uppercase" href="{% url 'create_sub' %}">Create Subreddit</a>
+	</div>
+</div>

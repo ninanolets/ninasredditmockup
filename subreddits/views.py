@@ -1,14 +1,28 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Subreddit
+from posts.models import Post
 
-def index(request):
-    return render(request, 'subreddits/subreddits.html')
+from subreddits.validate_subreddit import ValidateSubreddit
+
 
 def subreddit(request, subreddits_id):
     subreddit = get_object_or_404(Subreddit, pk=subreddits_id)
-    
+    posts = Post.objects.filter(subreddit_id=subreddits_id).order_by('-pub_date')
+
     context = {
-		'subreddit': subreddit
+		'subreddit': subreddit,
+        'posts': posts,
 	}
 
     return render(request, 'subreddits/subreddit.html', context)
+
+# @login_required(login_url='/accounts/signup')
+def create(request):    
+    validate_subreddit = ValidateSubreddit(request)
+
+    if not validate_subreddit.is_create_subreddit_valid():
+        return render(request, 'subreddits/create_sub.html', {'error': 'All fields are required to create a product.'})
+
+    subreddit = validate_subreddit.create_subreddit()
+
+    return redirect('/subreddits/' + str(subreddit.id))

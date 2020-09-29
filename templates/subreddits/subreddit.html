@@ -5,13 +5,17 @@
 
 {% block content %}
 
-<!-- Top bar Subreddits -->
+<!-- Top bar Subreddit -->
 <div class="bg-image">
 	<img class="w-100 fit" height="100" src="{{ subreddit.photo.url }}" alt="">
 </div>
+
 <div class="px-5 bg-white">
 	<div class="d-flex">
-		<img class="border rounded-circle border-white border-10 growing-pos bg-white mb-2" height="100" src="{% static 'img/avatar.png' %}" alt="">
+		<img class="border rounded-circle border-white growing-pos bg-white mb-2 fit" height="100" width="100"
+		{% if subreddit.avatar %} src="{{ subreddit.avatar.url }}"
+		{% else %} src="{% static 'img/avatar-gray.png' %}"
+		{% endif %}>
 		<div class="mt-4 mb-2 pl-3 d-flex w-100">
 			<div class="pr-5">
 				<h1>{{ subreddit.title }}</h1>
@@ -30,13 +34,13 @@
 
     <!-- Breadcrumbs -->
     {% include 'partials/_breadc.html' %}
-    <!-- All posts from DB -->
-    {% include 'partials/_posts.html' %}
+    <!-- Forum posts from DB -->
+	{% include 'partials/_posts.html' %}
 
   </div>
-	
 
-	<!-- All communites top bar -->
+	
+	<!-- About Subreddit -->
 	<div class="container col-4 p-0 rounded bg-white align-self-start">
 		<div class="p-0 rounded-top bg-info" width="100%" >
 			<h5 class="p-3 let-sp" height="100">About Community</h5>
@@ -53,3 +57,5 @@
 </div>
 
 {% endblock %}
+
+

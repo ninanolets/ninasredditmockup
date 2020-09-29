@@ -34,5 +34,4 @@ class ValidatePost():
             self.request.POST['content'] and
             self.request.FILES['photo']
         )
-
-    
+        

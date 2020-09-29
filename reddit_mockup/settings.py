@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     'subreddits.apps.SubredditsConfig',
     'posts.apps.PostsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [

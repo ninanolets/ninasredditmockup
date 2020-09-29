@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 from .models import Post
 from subreddits.models import Subreddit
@@ -32,12 +32,17 @@ def post(request, posts_id):
 	}
     return render(request, 'posts/post.html', context)
 
-# @login_required(login_url='/accounts/signup')
+@login_required(login_url='/accounts/login')
 def create(request):    
     validate_post = ValidatePost(request)
 
     if validate_post.is_create_post_valid():
+        
         post = validate_post.create_post()
         return redirect('/posts/' + str(post.id))
     
-    return render(request, 'posts/create.html', {'error': 'All fields are required to create a product.'})
+    else: 
+        return render(request, 'posts/create.html', {'error': 'All fields are required to create a product.'})
+
+
+    

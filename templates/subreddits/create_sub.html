@@ -2,27 +2,28 @@
 
 {% block content %}
 
-{% if error %}
-<br>{{ error }}<br><br>
-{% endif %}
+<div class="container">
+    {% if error %}
+    <br>{{ error }}<br><br>
+    {% endif %}
 
-<br><h1>CREATE!!!</h1>
+    <br><h1>CREATE!!!</h1>
 
-<form method="POST" action="{% url 'create_sub' %}" enctype="multipart/form-data">
-    {% csrf_token %} <!-- security measure - always include -->
-    Slug:
-    <br><input type="text" name="slug"><br>
-    Avatar:
-    <br><input type="file" name="avatar"><br>
-    Title:
-    <br><input type="text" name="title"><br>
-    Description:
-    <br><input type="textbox" name="content"><br>
-    Photo:
-    <br><input type="file" name="photo"><br>
-    <br><input type="submit" value="Add Product" class="btn btn-danger">
-</form>
+    <form method="POST" action="{% url 'create_sub' %}" enctype="multipart/form-data">
+        {% csrf_token %} <!-- security measure - always include -->
+        Subreddit name (slug):
+        <br><input type="text" name="slug"><br>
+        Avatar:
+        <br><input type="file" name="avatar"><br>
+        Title:
+        <br><input type="text" name="title"><br>
+        Description:
+        <br><input type="textbox" name="content"><br>
+        Photo:
+        <br><input type="file" name="photo"><br>
 
+        <br><input type="submit" value="Create Subreddit" class="btn btn-danger">
+        <br><br>
+    </form>
+</div>
 {% endblock %}
-
- 

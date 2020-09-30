@@ -13,13 +13,18 @@ def index(request):
     posts = Post.objects.order_by('-pub_date')
     subreddits = Subreddit.objects.all()
 
-    paginator = Paginator(subreddits, 5)
-    page_number = request.GET.get('page')
-    paged_subs = paginator.get_page(page_number)
+    sub_paginator = Paginator(subreddits, 3)
+    sub_page_number = request.GET.get('page')
+    paged_subs = sub_paginator.get_page(sub_page_number)
 
+    post_paginator = Paginator(posts, 15)
+    post_page_number = request.GET.get('page')
+    paged_posts = post_paginator.get_page(post_page_number)
+
+    # MAKE POST PAGINATION
 
     context = {
-		'posts': posts,
+		'posts': paged_posts,
         'subreddits': paged_subs
 	}
     return render(request, 'posts/index.html', context)
@@ -35,14 +40,15 @@ def post(request, posts_id):
 @login_required(login_url='/accounts/login')
 def create(request):    
     validate_post = ValidatePost(request)
-
-    if validate_post.is_create_post_valid():
-        
-        post = validate_post.create_post()
-        return redirect('/posts/' + str(post.id))
     
+    if request.method == 'POST':
+        if validate_post.is_create_post_valid():
+            post = validate_post.create_post()
+            return redirect('/post/' + str(post.id))
+        
+        else: 
+            return render(request, 'posts/create.html', {'error': 'All fields are required to create a product.'})
     else: 
-        return render(request, 'posts/create.html', {'error': 'All fields are required to create a product.'})
-
+        return render(request, 'posts/create.html')
 
     

@@ -39,12 +39,14 @@
 							Posted by <a class="pr-4 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}"><img height="15" src="{% static 'img/clock.png' %}"> {{ post.pub_date | naturaltime }}</a>
 							<h4 class="m-0 pt-1 pb-3 text-dark">{{ post.title }}</h4>
 						</div>
-						{% if post.photo %}
-						<img class="mx-auto d-block pr-0" src="{{ post.photo.url }}">
-						{% endif %}
-						{% if post.content %}
-						<p class="pr-5 pt-4"> {{ post.content }}</p>
-						{% endif %}
+						<div class="mb-4">
+							{% if post.photo %}
+							<img class="mx-auto d-block pr-0" src="{{ post.photo.url }}">
+							{% endif %}
+							{% if post.content %}
+							<p class="pt-4"> {{ post.content }}</p>
+							{% endif %}
+						</div>
 					</div>
 				</div>
 				

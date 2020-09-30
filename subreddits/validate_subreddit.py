@@ -7,15 +7,19 @@ class ValidateSubreddit():
 
     def create_subreddit(self):
         subreddit = Subreddit() 
-        
+
         subreddit.slug = self.request.POST['slug'] 
-        subreddit.avatar = self.request.FILES['avatar']
         subreddit.title = self.request.POST['title'] 
-        subreddit.content = self.request.POST['description']
+        subreddit.description = self.request.POST['content']
         subreddit.photo = self.request.FILES['photo'] 
+        
+        try:
+            subreddit.avatar = self.request.FILES['avatar']
+        except:
+            subreddit.avatar = self.request.POST.get('avatar', False)
+
         subreddit.pub_date = timezone.datetime.now()
         subreddit.user = self.request.user
-        subreddit.subreddit = self.request.subreddit
 
         subreddit.save() 
 
@@ -23,11 +27,9 @@ class ValidateSubreddit():
 
     def is_create_subreddit_valid(self):
         return (
-            self.request.method == 'POST' and
             self.request.POST['slug'] and
-            self.request.POST['avatar'] and
             self.request.POST['title'] and 
-            self.request.POST['description'] and
+            self.request.POST['content'] and
             self.request.FILES['photo']
         )
 

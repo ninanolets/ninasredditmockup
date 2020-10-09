@@ -6,15 +6,18 @@
 	<div class="w-100">
 		<div id="subreddits" class="border d-flex highlight-border">
 			<div class="flex-shrink-1 bg-light px-3 d-flex flex-column align-items-center justify-content-center">
-				<a class="pb-1 highlight-bg" href="#">
+
+				<a class="pb-1 highlight-bg" href="/post/{{ post.id }}/upvote_post">
 					<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+					{% comment %} <form id="upvote_post" method="POST" action="{% url 'upvote_post' post.id %}">
+								{% csrf_token %}<input type="hidden">
+							</form> {% endcomment %}
 				</a>
-				44k
-				{% comment %} {{ post.votes_total }}  {% endcomment %}
-				{% comment %} <form id='upvote_post' method="POST" action="{% url 'upvote_post' post.id %}">
-					{% csrf_token %}
-					<input type="hidden">
-				</form> {% endcomment %}
+				{% if post.upvotes.count == 0 %}
+				&#8212;
+				{% else %}
+				{{ post.upvotes.count | intcomma }}
+				{% endif %}
 			</div>
 			
 			<div class="p-2">

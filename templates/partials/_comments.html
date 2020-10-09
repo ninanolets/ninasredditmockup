@@ -20,11 +20,20 @@
 <div class="p-2 mb-4 mr-5 border rounded bg-light">
 	<div class="d-flex">
 		<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
-			<a class="pb-1 highlight-bg" href="#">
+			<a class="pb-1 highlight-bg" href="/post/{{ comment.post.id}}/upvote_comment/{{ comment.id }}">
 				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+				<form id="upvote_comment" method="POST" action="{% url 'upvote_comment' comment.id comment.post.id %}">
+				{% csrf_token %}<input type="hidden">
+				</form>
 			</a>
-			4.4k
+			{% if comment.upvotes.count == 0 %}
+			&#8212;
+			{% else %}
+			{{ comment.upvotes.count | intcomma }}
+			{% endif %}
+
 		</div>
+
 					
 		<div class="col-11">
 			<div class="pr-5">

@@ -10,7 +10,11 @@
 <div class="container p-0">
 	<div class="bg-gray px-5">
 		<div class="d-flex">
-			<img class="border rounded-circle border-white border-10 bg-white my-3" height="50" src="{% static 'img/avatar.png' %}" alt="">
+			<img class="border rounded-circle border-white border-10 bg-white my-3 fit" height="50" width="50"
+			{% if post.subreddit.avatar %} src="{{ post.subreddit.avatar.url }}"
+			{% else %} src="{% static 'img/avatar-gray.png' %}"
+			{% endif %}>
+
 			<div class="mt-4 mb-2 pl-3 d-flex w-100">
 				<div class="pr-5 text-white">
 					<h2 class="font-weight-light"><a class="no-link" href="{% url 'subreddit' post.subreddit.id %}">/{{ post.subreddit }}</a></h2>
@@ -19,12 +23,19 @@
 		</div>
 	</div>
 
+
 	<div class="">
 		<div class="d-flex bg-dark text-light py-2 px-5">
-			&#124; <a class="highlight-bg-dark align-center" href="#">
-				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+			&#124; <a class="highlight-bg-dark align-center" href="/post/{{ post.id }}/upvote_post">
+				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15">
+				
+				<form id="upvote_post" method="POST" action="{% url 'upvote_post' post.id %}">
+						{% csrf_token %}<input type="hidden">
+				</form>
 			</a> 
-			<p class="m-0 px-2">4.4k</p> &#124;
+
+			
+			<p class="m-0 px-2">{{ post.upvotes.count | intcomma }}</p> &#124;
 			<p class="pl-4 m-0 font-weight-light">{{ post.custom_title }}</p>
 
 			{% if user.is_authenticated %}
@@ -45,11 +56,17 @@
 			<div class="p-3 border rounded bg-white col-10 ">
 				<div class="d-flex">
 					<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
-						<a class="pb-1 highlight-bg" href="#">
+
+						<a class="pb-1 highlight-bg" href="/post/{{ post.id }}/upvote_post">
 							<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+							<form id="upvote_post" method="POST" action="{% url 'upvote_post' post.id %}">
+								{% csrf_token %}<input type="hidden">
+							</form>
 						</a>
-						4.4k
+						{{ post.upvotes.count | intcomma }}
+						
 					</div>
+
 					<div>
 						<div class="text-secondary pr-5">
 							Posted by <a class="pr-4 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}"><img height="15" src="{% static 'img/clock.png' %}"> {{ post.pub_date | naturaltime }}</a>

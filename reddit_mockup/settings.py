@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'accounts.apps.AccountsConfig',
     'comments.apps.CommentsConfig',
+    'postupvotes.apps.PostupvotesConfig',
+    'commupvotes.apps.CommupvotesConfig',
 ]
 
 MIDDLEWARE = [

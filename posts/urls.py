@@ -7,4 +7,6 @@ urlpatterns = [
     path('post/create', views.create, name='create'), 
     path('post/delete/<int:posts_id>', views.delete_post, name='delete_post'),
     path('post/', include('comments.urls')),
+    path('post/', include('commupvotes.urls')),
+    path('post/', include('postupvotes.urls')),
 ]

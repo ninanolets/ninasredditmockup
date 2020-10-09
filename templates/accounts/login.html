@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
+{% block title %} | LogIn {% endblock  %}
+
 {% block content %}
 
 <div class="container">
-	{% if error %}
-	<br><br>{{ error }}<br><br>
-	{% endif %}
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
 
 	<br><h1>LOG IN</h1><br>
 

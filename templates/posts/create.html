@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
+{% block title %} | Create Post {% endblock  %}
+
 {% block content %}
 
 <div class="container"> 
-	{% if error %}
-	<br><br>{{ error }}<br><br>
-	{% endif %}
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
 
 	<br><br><h1>CREATE!!!</h1><br>
 

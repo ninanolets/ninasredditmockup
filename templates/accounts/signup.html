@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
+{% block title %} | SignUp {% endblock  %}
+
 {% block content %}
 
 <div class="container">
-	{% if error %}
-	<br><br>{{ error }}<br><br>
-	{% endif %}
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
 
 	<br><h1>SIGN UP</h1><br>
 
@@ -13,6 +14,8 @@
 			{% csrf_token %} <!-- security measure - always include -->
 			Username:
 			<br><input type="text" name="username" id=""><br>
+			Email:
+			<br><input type="text" name="email" id=""><br>
 			Password:
 			<br><input type="password" name="password1" id=""><br>
 			Confirm password:

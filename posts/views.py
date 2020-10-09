@@ -3,10 +3,14 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Post
 from subreddits.models import Subreddit
+from comments.models import Comment
 
 from django.utils import timezone 
 from posts.validate_post import ValidatePost
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 
 def index(request):
@@ -25,16 +29,19 @@ def index(request):
 
     context = {
 		'posts': paged_posts,
-        'subreddits': paged_subs
+        'subreddits': paged_subs,
 	}
     return render(request, 'posts/index.html', context)
 
 def post(request, posts_id):
     post = get_object_or_404(Post, pk=posts_id)
+    comments = Comment.objects.filter(post_id=posts_id).order_by('-pub_date')
 
     context = {
 		'post': post,
+        'comments': comments,
 	}
+
     return render(request, 'posts/post.html', context)
 
 @login_required(login_url='/accounts/login')
@@ -45,10 +52,23 @@ def create(request):
         if validate_post.is_create_post_valid():
             post = validate_post.create_post()
             return redirect('/post/' + str(post.id))
-        
         else: 
-            return render(request, 'posts/create.html', {'error': 'All fields are required to create a product.'})
+            messages.error(request, 'All fields are required to create a post')
+            return redirect(request, 'create')
     else: 
         return render(request, 'posts/create.html')
 
+@login_required(login_url='/accounts/login')
+def delete_post(request, posts_id):
+    post = get_object_or_404(Post, pk=posts_id)
     
+    if request.user == post.user:
+        post.delete() # or save edits
+        messages.success(request, 'Successfully Deleted')
+        return redirect('index')
+    else:
+        messages.error(request, 'Permission Denied')
+        return redirect('/post/' + str(post.id))
+
+    
+

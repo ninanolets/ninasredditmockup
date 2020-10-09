@@ -3,6 +3,8 @@
 {% load static %}
 {% load humanize %}
 
+{% block title %} | {{ subreddit.slug }} {% endblock  %}
+
 {% block content %}
 
 <!-- Top bar Subreddit -->
@@ -34,6 +36,8 @@
 
     <!-- Breadcrumbs -->
     {% include 'partials/_breadc.html' %}
+	<!-- Alerts -->
+	{% include 'partials/_alerts.html' %}
     <!-- Forum posts from DB -->
 	{% include 'partials/_posts.html' %}
 
@@ -42,15 +46,23 @@
 	
 	<!-- About Subreddit -->
 	<div class="container col-4 p-0 rounded bg-white align-self-start">
-		<div class="p-0 rounded-top bg-info" width="100%" >
-			<h5 class="p-3 let-sp" height="100">About Community</h5>
+		<div class="p-0 rounded-top bg-info d-flex" width="100%" >
+			<h5 class="p-3 let-sp m-0" height="">About Community</h5>
+
+			{% if user.is_authenticated %}
+			<a class="no-link btn btn-danger my-2 mx-4 ml-auto text-white" href="/subreddit/delete/{{ subreddit.id }}">Delete Sub</a>
+			<form id="delete_sub" method="DELETE" action="{% url 'delete_sub' subreddit.id %}">
+				{% csrf_token %}<input type="hidden">
+			</form>
+			{% endif %}
+
 		</div>
 		<div class="px-4 pt-4">
 			<p class="pb-2">{{ subreddit.description }}</p>
 			<h6 class="font-weight-light border-top pt-3 m-0"><img class="mr-2" src="{% static 'img/cakeday.png' %}" height="30">Created {{ subreddit.custom_pub_date }}</h6>
 		</div>
     <div class="py-3 px-4">
-      <button class="btn btn-info col-12 text-uppercase font-weight-bold" type="button" href="#">Create Post</button>
+      <a class="btn btn-info col-12 text-uppercase font-weight-bold" type="button" href="{% url 'create' %}">Create Post</a>
     </div>
 
   </div>

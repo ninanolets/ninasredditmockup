@@ -3,6 +3,8 @@
 {% load static %}
 {% load humanize %}
 
+{% block title %} | Welcome {% endblock  %}
+
 {% block content %}
 
 <!-- Flex box -->
@@ -11,6 +13,8 @@
 
     <!-- Breadcrumbs -->
     {% include 'partials/_breadc.html' %}
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
     <!-- All posts from DB -->
     {% include 'partials/_posts.html' %}
 

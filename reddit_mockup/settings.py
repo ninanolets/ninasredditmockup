@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'subreddits.apps.SubredditsConfig',
     'posts.apps.PostsConfig',
     'accounts.apps.AccountsConfig',
+    'comments.apps.CommentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,8 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

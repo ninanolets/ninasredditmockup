@@ -9,8 +9,14 @@
 				<a class="pb-1 highlight-bg" href="#">
 					<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
 				</a>
-				4.4k
+				44k
+				{% comment %} {{ post.votes_total }}  {% endcomment %}
+				{% comment %} <form id='upvote_post' method="POST" action="{% url 'upvote_post' post.id %}">
+					{% csrf_token %}
+					<input type="hidden">
+				</form> {% endcomment %}
 			</div>
+			
 			<div class="p-2">
 				{% if post.photo %}
 					<a class="no-link" href="{% url 'post' post.id %}"><img class="bg-image rounded fit" height="95" width="135" src="{{ post.photo.url }}"></a>
@@ -25,7 +31,8 @@
 					<h5 class="font-weight-normal m-0">{{ post.title }}</h5>
 					<a class="pr-2" href="{% url 'subreddit' post.subreddit.id %}">/{{ post.subreddit }}</a>&middot;	Posted by <a class="pr-2 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}">{{ post.pub_date | naturaltime }}</a>
 					<div class="pt-2">
-						<a class="no-link-highlight px-2 py-1" href="{% url 'post' post.id %}"><img class="mr-2" src="{% static 'img/comment.png' %}" width="20" height="20">15 Comments</a>
+							<a class="no-link-highlight px-2 py-1" href="{% url 'post' post.id %}"><img class="mr-2" src="{% static 'img/comment.png' %}" width="20" height="20"> 
+							{{ post.commented.count }} Comment{% if post.commented.count == 1 %}</a>{% else %}s</a>{% endif %}							
 					</div>
 				</a>  
 			</div>
@@ -35,3 +42,5 @@
 	</div>
 	{% endfor %}
 </div>
+
+<!-- -->

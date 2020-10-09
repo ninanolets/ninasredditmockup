@@ -1,0 +1,90 @@
+{% load static %}
+{% load humanize %}
+
+<!-- Create -->
+<div class="p-3 mb-4 border col-9 rounded bg-white">
+	<form method="POST" action="{% url 'create_comment' post.id %}">
+	{% comment %} {% url 'create_comment' post.id %}"> {% endcomment %}
+		{% csrf_token %} 
+		<p class="text-dark">Comment as <a class="text-info" href="{% url 'dashboard' %}">/{{ user }}</a></p>
+		<textarea class="textarea" type="textbox" name="comment_content" id="comment" placeholder="What are your thoughts?" style="height:150px; width:550px;"></textarea><br>
+		<br><p class="m-auto"><input type="submit" value="Comment" class="btn btn-info"><br></p>
+	</form>
+
+
+
+</div>
+
+<!-- Comments -->
+{% for comment in comments %}
+<div class="p-2 mb-4 mr-5 border rounded bg-light">
+	<div class="d-flex">
+		<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
+			<a class="pb-1 highlight-bg" href="#">
+				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+			</a>
+			4.4k
+		</div>
+					
+		<div class="col-11">
+			<div class="pr-5">
+				<div class="text-secondary pr-3">
+					Posted by <a class="pr-4 text-secondary" href="#">/{{ comment.user }}</a><img class="text-secondary" height="15" src="{% static 'img/clock.png' %}"> {{ comment.pub_date | naturaltime }}
+					{% if user.is_authenticated %}
+					<div class="float-right">
+						<a class="no-link btn btn-secondary py-0 text-light" href="/post/{{ comment.post.id }}/delete_comment/{{ comment.id }}">Delete Comment</a>
+						<form id="delete_comment" method="DELETE" action="{% url 'delete_comment' comment.post.id comment.id %}">
+								{% csrf_token %}<input type="hidden">
+						</form>
+					</div>
+					{% endif %}
+					
+					<p class="m-0 pt-3 pb-3 text-dark">{{ comment }}</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endfor %}
+
+
+
+
+
+
+{% comment %} 
+<div class="bg-white">
+	{% for post in posts %}
+	<div class="w-100">
+		<div id="subreddits" class="border d-flex highlight-border">
+			<div class="flex-shrink-1 bg-light px-3 d-flex flex-column align-items-center justify-content-center">
+				<a class="pb-1 highlight-bg" href="#">
+					<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
+				</a>
+				4.4k
+			</div>
+			<div class="p-2">
+				{% if post.photo %}
+					<a class="no-link" href="{% url 'post' post.id %}"><img class="bg-image rounded fit" height="95" width="135" src="{{ post.photo.url }}"></a>
+				{% else %} 
+					<div class="bg-light py-4 px-5 rounded">
+						<a class="no-link" href="{% url 'post' post.id %}"><img class="bg-image" src="{% static 'img/paper-plane.png' %}" alt="Paper plane" width="40" height="40"></a>
+					</div>
+				{% endif %}		
+			</div>
+			<div class="p-2">
+				<a class="no-link" href="{% url 'post' post.id %}">
+					<h5 class="font-weight-normal m-0">{{ post.title }}</h5>
+					<a class="pr-2" href="{% url 'subreddit' post.subreddit.id %}">/{{ post.subreddit }}</a>&middot;	Posted by <a class="pr-2 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}">{{ post.pub_date | naturaltime }}</a>
+					<div class="pt-2">
+						<a class="no-link-highlight px-2 py-1" href="{% url 'post' post.id %}"><img class="mr-2" src="{% static 'img/comment.png' %}" width="20" height="20">15 Comments</a>
+					</div>
+				</a>  
+			</div>
+			
+		</div>
+		
+	</div>
+	{% endfor %}
+</div> {% endcomment %}

@@ -29,7 +29,7 @@
 					</div>
 				{% endif %}		
 			</div>
-			<div class="p-2">
+			<div class="p-2 br-line">
 				<a class="no-link" href="{% url 'post' post.id %}">
 					<h5 class="font-weight-normal m-0">{{ post.title }}</h5>
 					<a class="pr-2" href="{% url 'subreddit' post.subreddit.id %}">/{{ post.subreddit }}</a>&middot;	Posted by <a class="pr-2 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}">{{ post.pub_date | naturaltime }}</a>

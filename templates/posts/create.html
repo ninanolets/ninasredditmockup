@@ -12,6 +12,21 @@
 
 	<form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
 		{% csrf_token %} <!-- security measure - always include -->
+		
+		{% comment %} <div class="">
+			<label for="subreddit">Subreddit name:</label>
+			<select class="form-control col-3" name="subreddit">
+        			<option selected disabled>Choose a subreddit</option>
+				{% for subreddit in subreddits %}
+					<option value="{{ subreddit.id }}" 
+					{% if subreddit.id == request.subreddit.id %}
+						selected="true"
+					{% endif %}
+					>{{ subreddit }}</option>
+				{% endfor %}
+			</select>
+		</div> {% endcomment %}
+		
 		Subreddit name:
 		<br><input type="text" name="subreddit"><br>
 		Title:

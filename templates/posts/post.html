@@ -39,12 +39,13 @@
 			<p class="pl-4 m-0 font-weight-light">{{ post.custom_title }}</p>
 
 			{% if user.is_authenticated %}
-			
-			<a class="no-link btn btn-danger py-0 ml-auto" href="/post/delete/{{ post.id }}">Delete Post</a>
-			<form id="delete_post" method="DELETE" action="{% url 'delete_post' post.id %}">
-					{% csrf_token %}<input type="hidden">
-			</form>
-
+				{% comment %} {% if request.user == user %} {% endcomment %}
+				
+					<a class="no-link btn btn-danger py-0 ml-auto" href="/post/delete/{{ post.id }}">Delete Post</a>
+					<form id="delete_post" method="DELETE" action="{% url 'delete_post' post.id %}">
+							{% csrf_token %}<input type="hidden">
+					</form>
+				{% comment %} {% endif %} {% endcomment %}
 			{% endif %}
 		</div>
 
@@ -53,8 +54,8 @@
 			<!-- Alerts -->
 			{% include 'partials/_alerts.html' %}
 			</div>
-			<div class="p-3 border rounded bg-white col-10 ">
-				<div class="d-flex">
+			<div class="p-3 border rounded bg-white col-10">
+				<div class="d-flex w-100">
 					<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
 
 						<a class="pb-1 highlight-bg" href="/post/{{ post.id }}/upvote_post">
@@ -67,7 +68,7 @@
 						
 					</div>
 
-					<div>
+					<div class="w-100 br-line">
 						<div class="text-secondary pr-5">
 							Posted by <a class="pr-4 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}"><img height="15" src="{% static 'img/clock.png' %}"> {{ post.pub_date | naturaltime }}</a>
 							<h4 class="m-0 pt-1 pb-3 text-dark">{{ post.title }}</h4>
@@ -77,7 +78,7 @@
 							<img class="mx-auto d-block pr-0" src="{{ post.photo.url }}">
 							{% endif %}
 							{% if post.content %}
-							<p class="pt-4"> {{ post.content }}</p>
+							<p class="pt-4 pr-5"> {{ post.content }}</p>
 							{% endif %}
 							<div class="mt-5">
 								<!-- Comments -->

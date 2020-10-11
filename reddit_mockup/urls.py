@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('posts.urls')),
     path('subreddit/', include('subreddits.urls')),
     path('accounts/', include('accounts.urls')),
+    path('contacts/', include('contacts.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -5,15 +5,15 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
-
+from contacts.models import Contact
 
 def signup(request):
-    username = request.POST['username']
-    email = request.POST['email']
-    password = request.POST['password1']
-    password2 = request.POST['password2']
-
     if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password1']
+        password2 = request.POST['password2']
+
         if password == password2:
             if User.objects.filter(username=username).exists():
                 messages.error(request, 'Username is already taken')
@@ -23,13 +23,13 @@ def signup(request):
                     messages.error(request, 'Email already registered')
                     return redirect('sign up')
                 else:
-                    user = User.objects.create_user(username=username, password=password)
+                    user = User.objects.create_user(username=username, password=password, email=email)
                     user.save()
                     messages.success(request, 'You are now registered and can login')
                     return redirect('login')
         else: 
             messages.error(request, 'Passwords must match')
-            return redirect('register')
+            return redirect('signup')
     return render(request, 'accounts/signup.html')
 
 
@@ -57,4 +57,9 @@ def logout(request):
 
 @login_required(login_url='/accounts/login')
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    
+    context = {
+        'contacts': user_contacts,
+    }
+    return render(request, 'accounts/dashboard.html', context)

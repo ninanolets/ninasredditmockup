@@ -2,22 +2,28 @@
 {% load humanize %}
 
 <!-- Create -->
+{% if user.is_authenticated %}
 <div class="p-3 mb-4 border col-9 rounded bg-white">
 	<form method="POST" action="{% url 'create_comment' post.id %}">
-	{% comment %} {% url 'create_comment' post.id %}"> {% endcomment %}
 		{% csrf_token %} 
 		<p class="text-dark">Comment as <a class="text-info" href="{% url 'dashboard' %}">/{{ user }}</a></p>
 		<textarea class="textarea" type="textbox" name="comment_content" id="comment" placeholder="What are your thoughts?" style="height:150px; width:550px;"></textarea><br>
 		<br><p class="m-auto"><input type="submit" value="Comment" class="btn btn-info"><br></p>
 	</form>
-
-
-
 </div>
+{% else %}
+<fieldset disabled>
+	<div class="p-3 mb-4 border col-9 rounded bg-white"> 
+		<p class="text-dark">You can't comment as <a class="text-info" href="{% url 'dashboard' %}">/{{ user }}</a></p>
+		<textarea class="textarea" type="textbox" name="comment_content" id="disabledTextInput" placeholder="Login to comment" style="height:150px; width:550px;"></textarea><br>
+		<br><p class="m-auto"><input type="submit" value="Comment" class="btn btn-info"><br></p>
+	</div>
+</fieldset>
+{% endif %}
 
 <!-- Comments -->
 {% for comment in comments %}
-<div class="p-2 mb-4 mr-5 border rounded bg-light">
+<div class="p-2 mb-4 mr-5 border rounded bg-light w-80">
 	<div class="d-flex">
 		<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
 			<a class="pb-1 highlight-bg" href="/post/{{ comment.post.id}}/upvote_comment/{{ comment.id }}">
@@ -37,7 +43,7 @@
 					
 		<div class="col-11">
 			<div class="pr-5">
-				<div class="text-secondary pr-3">
+				<div class="text-secondary pr-3 br-line">
 					Posted by <a class="pr-4 text-secondary" href="#">/{{ comment.user }}</a><img class="text-secondary" height="15" src="{% static 'img/clock.png' %}"> {{ comment.pub_date | naturaltime }}
 					{% if user.is_authenticated %}
 					<div class="float-right">
@@ -48,7 +54,7 @@
 					</div>
 					{% endif %}
 					
-					<p class="m-0 pt-3 pb-3 text-dark">{{ comment }}</p>
+					<p class="m-0 pt-3 pb-3 text-dark">{{ comment | linebreaks }}</p>
 				</div>
 			</div>
 		</div>

@@ -46,17 +46,21 @@ def post(request, posts_id):
 
 @login_required(login_url='/accounts/login')
 def create(request):    
+    subreddits = Subreddit.objects.all()
     validate_post = ValidatePost(request)
-    
+    context = { 
+        'subreddits': subreddits 
+    }
+
     if request.method == 'POST':
         if validate_post.is_create_post_valid():
             post = validate_post.create_post()
             return redirect('/post/' + str(post.id))
         else: 
             messages.error(request, 'All fields are required to create a post')
-            return redirect(request, 'create')
+            return redirect('create')
     else: 
-        return render(request, 'posts/create.html')
+        return render(request, 'posts/create.html', context)
 
 @login_required(login_url='/accounts/login')
 def delete_post(request, posts_id):

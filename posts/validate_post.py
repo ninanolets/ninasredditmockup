@@ -7,6 +7,7 @@ class ValidatePost():
         self.request = request
 
     def create_post(self):
+        subreddits = Subreddit.objects.all()
         post = Post() 
         
         post.pub_date = timezone.datetime.now()
@@ -20,8 +21,10 @@ class ValidatePost():
         except:
             post.photo = self.request.POST.get('photo', False)
 
+        # sub_slug = self.request.POST['subreddit']
+        # post.subreddit = subreddits.get(slug=sub_slug)
         subreddit = self.request.POST['subreddit']
-        post.subreddit = Subreddit.objects.get(slug=subreddit)
+        post.subreddit = subreddits.get(slug=subreddit)
 
         post.save() 
 

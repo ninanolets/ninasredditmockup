@@ -39,3 +39,8 @@
     border-radius: 3px;
 }
 
+
+
+.br-line {
+    word-break: break-all;
+}

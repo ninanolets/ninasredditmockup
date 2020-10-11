@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'comments.apps.CommentsConfig',
     'postupvotes.apps.PostupvotesConfig',
     'commupvotes.apps.CommupvotesConfig',
+    'contacts.apps.ContactsConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,19 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Messages
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+# CONTACT: Email config for gmail account (host and port might be different with others)
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587' 
+EMAIL_HOST_USER = 'marinaa.noleto@gmail.com'
+EMAIL_HOST_PASSWORD = 'M4r1n4N0l3t0'
+EMAIL_USE_TLS = True
+
+# for it to work, is necessary to unlock captcha and allow less secure apps from EMAIL_HOST_USER
+# https://accounts.google.com/DisplayUnlockCaptcha
+# https://myaccount.google.com/lesssecureapps

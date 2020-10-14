@@ -6,7 +6,7 @@ from subreddits.models import Subreddit
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    subreddit = models.ForeignKey(Subreddit, on_delete=models.CASCADE)
+    subreddit = models.ForeignKey(Subreddit, related_name="sub_posts", on_delete=models.CASCADE)
     
     title = models.CharField(max_length=150)
     content = models.TextField(default='') # or blank=True
@@ -23,6 +23,7 @@ class Post(models.Model):
         if len(self.title) > 40:
             return self.title[:40] + "..." 
         return self.title
+    
     
     
 

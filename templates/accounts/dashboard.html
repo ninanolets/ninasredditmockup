@@ -17,22 +17,27 @@
 							<thead>
 								<tr>
 									<th scope="col">Date</th>
-									<th scope="col">Message sent</th>
+									<th scope="col">Messages sent</th>
 								</tr>
 							</thead>
-					{% if contacts %}
-						{% for contact in contacts %}
+							{% if contacts %}
+								{% for contact in contacts %}
 							<tbody>
 								<tr>
 									<td>{{ contact.contact_date }}</td>
 									<td>{{ contact.custom_message }}</td>
 								</tr>
 							</tbody>
-						{% endfor %}
+								{% endfor %}
+							{% else %}    
+							<tbody>
+								<tr>
+									<td></td>
+									<td>You did not send us any messages yet</td>
+								</tr>
+							</tbody>
+							{% endif %}
 						</table>
-					{% else %}    
-					<p>You did not send us any messages</p>
-					{% endif %}
 				</div>
 			</div>
 		</div>

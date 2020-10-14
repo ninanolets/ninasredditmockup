@@ -18,10 +18,10 @@ def signup(request):
             if User.objects.filter(username=username).exists():
                 messages.error(request, 'Username is already taken')
                 return redirect('signup')
-            else: 
+            else:
                 if User.objects.filter(email=email).exists(): 
                     messages.error(request, 'Email already registered')
-                    return redirect('sign up')
+                    return redirect('signup')
                 else:
                     user = User.objects.create_user(username=username, password=password, email=email)
                     user.save()

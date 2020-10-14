@@ -26,39 +26,50 @@
 
 	<div class="">
 		<div class="d-flex bg-dark text-light py-2 px-5">
-			&#124; <a class="highlight-bg-dark align-center" href="/post/{{ post.id }}/upvote_post">
+			
+			&#124; <a class="
+			{% if has_user_voted %}
+			highlight-bg-dark-voted
+			{% else %}
+			highlight-bg-dark 
+			{% endif %}
+			align-center" href="/post/{{ post.id }}/upvote_post">
 				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15">
 				
-				<form id="upvote_post" method="POST" action="{% url 'upvote_post' post.id %}">
+				{% comment %} <form id="upvote_post" method="POST" action="{% url 'upvote_post' post.id %}">
 						{% csrf_token %}<input type="hidden">
-				</form>
-			</a> 
-
+				</form> {% endcomment %}
+			</a> 				
 			
 			<p class="m-0 px-2">{{ post.upvotes.count | intcomma }}</p> &#124;
 			<p class="pl-4 m-0 font-weight-light">{{ post.custom_title }}</p>
 
-			{% if user.is_authenticated %}
-				{% comment %} {% if request.user == user %} {% endcomment %}
-				
+			{% if user.is_authenticated and user == post.user %}				
 					<a class="no-link btn btn-danger py-0 ml-auto" href="/post/delete/{{ post.id }}">Delete Post</a>
-					<form id="delete_post" method="DELETE" action="{% url 'delete_post' post.id %}">
+					<form id="delete_post" method="POST" action="{% url 'delete_post' post.id %}">
 							{% csrf_token %}<input type="hidden">
 					</form>
-				{% comment %} {% endif %} {% endcomment %}
 			{% endif %}
+		
 		</div>
 
 		<div class="bg-gray-2 px-5 py-4">
-			<div class="col-10">
-			<!-- Alerts -->
-			{% include 'partials/_alerts.html' %}
+			<div class="col-10 p-0">
+				<!-- Alerts -->
+				{% include 'partials/_alerts.html' %}
 			</div>
 			<div class="p-3 border rounded bg-white col-10">
 				<div class="d-flex w-100">
 					<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
 
-						<a class="pb-1 highlight-bg" href="/post/{{ post.id }}/upvote_post">
+						<a class="pb-1 
+						{% if has_user_voted %}
+						highlight-bg-dark-voted
+						{% else %}
+						highlight-bg
+						{% endif %}
+						
+						" href="/post/{{ post.id }}/upvote_post">
 							<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
 							<form id="upvote_post" method="POST" action="{% url 'upvote_post' post.id %}">
 								{% csrf_token %}<input type="hidden">

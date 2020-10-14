@@ -24,8 +24,10 @@
     <!-- Navbar -->
     {% include 'partials/_navbar.html' %}
     <!-- Main Content -->
-    {% block content %}
-    {% endblock %}
+    <div class="min-vh-100">
+      {% block content %}
+      {% endblock %}
+    </div>
     <!-- Footer -->
     {% include 'partials/_footer.html' %}
 

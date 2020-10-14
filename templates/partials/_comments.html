@@ -14,7 +14,7 @@
 {% else %}
 <fieldset disabled>
 	<div class="p-3 mb-4 border col-9 rounded bg-white"> 
-		<p class="text-dark">You can't comment as <a class="text-info" href="{% url 'dashboard' %}">/{{ user }}</a></p>
+		<p class="text-dark">You can't comment unless you're logged in</p>
 		<textarea class="textarea" type="textbox" name="comment_content" id="disabledTextInput" placeholder="Login to comment" style="height:150px; width:550px;"></textarea><br>
 		<br><p class="m-auto"><input type="submit" value="Comment" class="btn btn-info"><br></p>
 	</div>
@@ -26,12 +26,24 @@
 <div class="p-2 mb-4 mr-5 border rounded bg-light w-80">
 	<div class="d-flex">
 		<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
-			<a class="pb-1 highlight-bg" href="/post/{{ comment.post.id}}/upvote_comment/{{ comment.id }}">
+			
+			<a class="pb-1 
+			
+			{% for votes in has_user_voted_comm %}
+				{% if comment.id == votes.comment.id %}
+				highlight-bg-dark-voted
+				{% else %}
+				highlight-bg
+				{% endif %}
+			{% endfor %}
+			
+			" href="/post/{{ comment.post.id}}/upvote_comment/{{ comment.id }}">
 				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
 				<form id="upvote_comment" method="POST" action="{% url 'upvote_comment' comment.id comment.post.id %}">
 				{% csrf_token %}<input type="hidden">
 				</form>
 			</a>
+			
 			{% if comment.upvotes.count == 0 %}
 			&#8212;
 			{% else %}
@@ -43,12 +55,12 @@
 					
 		<div class="col-11">
 			<div class="pr-5">
-				<div class="text-secondary pr-3 br-line">
+				<div class="text-secondary br-line">
 					Posted by <a class="pr-4 text-secondary" href="#">/{{ comment.user }}</a><img class="text-secondary" height="15" src="{% static 'img/clock.png' %}"> {{ comment.pub_date | naturaltime }}
-					{% if user.is_authenticated %}
+					{% if user.is_authenticated and user == comment.user %}
 					<div class="float-right">
-						<a class="no-link btn btn-secondary py-0 text-light" href="/post/{{ comment.post.id }}/delete_comment/{{ comment.id }}">Delete Comment</a>
-						<form id="delete_comment" method="DELETE" action="{% url 'delete_comment' comment.post.id comment.id %}">
+						<a class="no-link btn btn-secondary py-0 text-light" href="/post/{{ comment.post.id }}/delete_comment/{{ comment.id }}">Delete</a>
+						<form id="delete_comment" method="POST" action="{% url 'delete_comment' comment.post.id comment.id %}">
 								{% csrf_token %}<input type="hidden">
 						</form>
 					</div>

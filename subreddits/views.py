@@ -1,27 +1,38 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Subreddit
 from posts.models import Post
+from postupvotes.models import Postupvote
+
 
 from subreddits.validate_subreddit import ValidateSubreddit
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def subreddit(request, subreddits_id):
     subreddit = get_object_or_404(Subreddit, pk=subreddits_id)
-    posts = Post.objects.filter(subreddit_id=subreddits_id).order_by('-pub_date')
+    posts = Post.objects.filter(subreddit_id=subreddits_id).annotate(upvote_count=Count('upvotes')).order_by('-upvote_count')
+    upvotes = Postupvote.objects.filter(user_id=request.user.id)
+
+    post_paginator = Paginator(posts, 10)
+    post_page_number = request.GET.get('page')
+    paged_posts = post_paginator.get_page(post_page_number)
+
 
     context = {
 		'subreddit': subreddit,
-        'posts': posts,
+        'posts': paged_posts,
+        'upvotes': upvotes,
 	}
 
     return render(request, 'subreddits/subreddit.html', context)
 
 def all_subreddits(request):
-    subreddits = Subreddit.objects.order_by('-pub_date')
+    subreddits = Subreddit.objects.annotate(subreddit_posts=Count('sub_posts')).order_by('-subreddit_posts')
 
     context = {
 		'subreddits': subreddits,
@@ -29,8 +40,14 @@ def all_subreddits(request):
 
     return render(request, 'subreddits/all_subreddits.html', context)
 
+
+def create(request):
+    if request.user.is_anonymous:
+        messages.error(request, 'You must login to be able to create subreddits.')
+    return create_2(request)
+
 @login_required(login_url='/accounts/login')
-def create(request):    
+def create_2(request):    
     validate_subreddit = ValidateSubreddit(request)
 
     if request.method == 'POST':

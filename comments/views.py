@@ -33,10 +33,10 @@ def delete_comment(request, comment_post, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     comment.post = Post.objects.get(id=comment_post)
     
-    if request.user == comment.user:
-        comment.delete()
-        messages.success(request, 'Successfully Deleted')
-        return redirect('/post/' + str(comment.post.id))
-    else:
-        messages.error(request, 'Permission Denied')
-        return redirect('/post/' + str(comment.post.id))
+    # if request.user == comment.user:
+    comment.delete()
+    messages.success(request, 'Successfully Deleted')
+    return redirect('/post/' + str(comment.post.id))
+    # else:
+    #     messages.error(request, 'Permission Denied')
+    #     return redirect('/post/' + str(comment.post.id))

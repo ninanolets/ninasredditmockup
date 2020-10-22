@@ -133,17 +133,6 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-# CONTACT: Email config for gmail account (host and port might be different with others)
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587' 
-EMAIL_HOST_USER = 'marinaa.noleto@gmail.com'
-EMAIL_HOST_PASSWORD = 'M4r1n4N0l3t0'
-EMAIL_USE_TLS = True
-
-# for it to work, is necessary to unlock captcha and allow less secure apps from EMAIL_HOST_USER
-# https://accounts.google.com/DisplayUnlockCaptcha
-# https://myaccount.google.com/lesssecureapps
-
 try:
     from .local_settings import *
 except ImportError:

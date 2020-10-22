@@ -143,3 +143,8 @@ EMAIL_USE_TLS = True
 # for it to work, is necessary to unlock captcha and allow less secure apps from EMAIL_HOST_USER
 # https://accounts.google.com/DisplayUnlockCaptcha
 # https://myaccount.google.com/lesssecureapps
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass

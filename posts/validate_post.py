@@ -21,8 +21,6 @@ class ValidatePost():
         except:
             post.photo = self.request.POST.get('photo', False)
 
-        # sub_slug = self.request.POST['subreddit']
-        # post.subreddit = subreddits.get(slug=sub_slug)
         subreddit = self.request.POST['subreddit']
         post.subreddit = subreddits.get(slug=subreddit)
 

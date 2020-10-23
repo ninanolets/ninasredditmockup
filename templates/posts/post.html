@@ -17,7 +17,7 @@
 
 			<div class="mt-4 mb-2 pl-3 d-flex w-100">
 				<div class="pr-5 text-white">
-					<h2 class="font-weight-light"><a class="no-link" href="{% url 'subreddit' post.subreddit.id %}">/{{ post.subreddit }}</a></h2>
+					<h2 class="font-weight-light"><a class="no-link" href="{% url 'subreddit' post.subreddit %}">/{{ post.subreddit }}</a></h2>
 				</div>
 			</div>
 		</div>
@@ -81,7 +81,7 @@
 
 					<div class="w-100 br-line">
 						<div class="text-secondary pr-5">
-							Posted by <a class="pr-4 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.id %}"><img height="15" src="{% static 'img/clock.png' %}"> {{ post.pub_date | naturaltime }}</a>
+							Posted by <a class="pr-4 text-secondary" href="#">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' subreddit post.id %}"><img height="15" src="{% static 'img/clock.png' %}"> {{ post.pub_date | naturaltime }}</a>
 							<h4 class="m-0 pt-1 pb-3 text-dark">{{ post.title }}</h4>
 						</div>
 						<div class="mb-4">

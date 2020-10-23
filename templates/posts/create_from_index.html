@@ -9,12 +9,12 @@
 <br>{% include 'partials/_alerts.html' %}
 
 	<br><h1>Create your post</h1><br>
-	<form method="POST" action="{% url 'create' subreddit %}" enctype="multipart/form-data">
+	<form method="POST" action="{% url 'create_from_index' %}" enctype="multipart/form-data">
 		{% csrf_token %} <!-- security measure - always include -->
 	
 		<div class="form-group">
 			Subreddit name:
-			<input type="text" name="subreddit" class="form-control" value="{{ subreddit.slug }}" required>
+			<input type="text" name="subreddit" class="form-control" placeholder="Choose an existing Subreddit" required>
 		</div>
 		<div class="form-group">
 			Post title:
@@ -33,17 +33,3 @@
 	</form><br><br>
 </div>
 {% endblock %}
-
-{% comment %} <div class="">
-			<label for="subreddit">Subreddit name:</label>
-			<select class="form-control col-3" name="subreddit">
-        			<option selected disabled>Choose a subreddit</option>
-				{% for subreddit in subreddits %}
-					<option value="{{ subreddit.id }}" 
-					{% if subreddit.id == request.subreddit.id %}
-						selected="true"
-					{% endif %}
-					>{{ subreddit }}</option>
-				{% endfor %}
-			</select>
-		</div> {% endcomment %}

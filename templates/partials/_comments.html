@@ -4,10 +4,10 @@
 <!-- Create -->
 {% if user.is_authenticated %}
 <div class="p-3 mb-4 border col-9 rounded bg-white">
-	<form method="POST" action="{% url 'create_comment' post.id %}">
+	<form method="POST" action="{% url 'create_comment' post.subreddit post.id %}">
 		{% csrf_token %} 
 		<p class="text-dark">Comment as <a class="text-info" href="{% url 'dashboard' %}">/{{ user }}</a></p>
-		<textarea class="textarea" type="textbox" name="comment_content" id="comment" placeholder="What are your thoughts?" style="height:150px; width:550px;"></textarea><br>
+		<textarea class="textarea" type="textbox" name="comment_content" id="comment" placeholder="What are your thoughts?" style="height:150px; width:550px;" required></textarea><br>
 		<br><p class="m-auto"><input type="submit" value="Comment" class="btn btn-info"><br></p>
 	</form>
 </div>
@@ -37,9 +37,9 @@
 				{% endif %}
 			{% endfor %}
 			
-			" href="/post/{{ comment.post.id}}/upvote_comment/{{ comment.id }}">
+			" href="/s/{{ post.subreddit }}/post/{{ post.id }}/upvote_comment/{{ comment.id }}">
 				<img src="{% static 'img/upvote.png' %}" class="logo mx-1" alt="upvote" height="15" >
-				<form id="upvote_comment" method="POST" action="{% url 'upvote_comment' comment.id comment.post.id %}">
+				<form id="upvote_comment" method="POST" action="{% url 'upvote_comment' post.subreddit post.id comment.id %}"> 
 				{% csrf_token %}<input type="hidden">
 				</form>
 			</a>
@@ -59,8 +59,8 @@
 					Posted by <a class="pr-4 text-secondary" href="#">/{{ comment.user }}</a><img class="text-secondary" height="15" src="{% static 'img/clock.png' %}"> {{ comment.pub_date | naturaltime }}
 					{% if user.is_authenticated and user == comment.user %}
 					<div class="float-right">
-						<a class="no-link btn btn-secondary py-0 text-light" href="/post/{{ comment.post.id }}/delete_comment/{{ comment.id }}">Delete</a>
-						<form id="delete_comment" method="POST" action="{% url 'delete_comment' comment.post.id comment.id %}">
+						<a class="no-link btn btn-secondary py-0 text-light" href="/s/{{ post.subreddit }}/post/{{ comment.post.id }}/delete_comment/{{ comment.id }}">Delete</a>
+						<form id="delete_comment" method="POST" action="{% url 'delete_comment' post.subreddit comment.post.id comment.id %}">
 								{% csrf_token %}<input type="hidden">
 						</form>
 					</div>

@@ -4,11 +4,11 @@
 
 {% block content %}
 
-<div class="container col-6">
+<br><div class="container col-6">
 <!-- Alerts -->
 {% include 'partials/_alerts.html' %}
 
-    <br><br><h1>Create your subreddit</h1><br>
+    <br><h1>Create your subreddit</h1><br>
 
     <form method="POST" action="{% url 'create_sub' %}" enctype="multipart/form-data">
         {% csrf_token %} <!-- security measure - always include -->

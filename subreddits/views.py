@@ -13,9 +13,30 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def subreddit(request, subreddits_id):
-    subreddit = get_object_or_404(Subreddit, pk=subreddits_id)
-    posts = Post.objects.filter(subreddit_id=subreddits_id).annotate(upvote_count=Count('upvotes')).order_by('-upvote_count')
+def index(request):
+    posts = Post.objects.annotate(upvote_count=Count('upvotes')).order_by('-upvote_count')
+    subreddits = Subreddit.objects.annotate(subreddit_posts=Count('sub_posts')).order_by('-subreddit_posts')
+    upvotes = Postupvote.objects.filter(user_id=request.user.id)
+
+
+    sub_paginator = Paginator(subreddits, 3)
+    sub_page_number = request.GET.get('page')
+    paged_subs = sub_paginator.get_page(sub_page_number)
+
+    post_paginator = Paginator(posts, 15)
+    post_page_number = request.GET.get('page')
+    paged_posts = post_paginator.get_page(post_page_number)
+
+    context = {
+		'posts': paged_posts,
+        'subreddits': paged_subs,
+        'upvotes': upvotes,
+	}
+    return render(request, 'subreddits/index.html', context)
+
+def subreddit(request, slug):
+    subreddit = get_object_or_404(Subreddit, slug=slug)
+    posts = Post.objects.filter(subreddit_id=subreddit.id).annotate(upvote_count=Count('upvotes')).order_by('-upvote_count')
     upvotes = Postupvote.objects.filter(user_id=request.user.id)
 
     post_paginator = Paginator(posts, 10)
@@ -48,16 +69,22 @@ def create(request):
 
 @login_required(login_url='/accounts/login')
 def create_2(request):    
+    subreddits = Subreddit.objects.all()
     validate_subreddit = ValidateSubreddit(request)
 
     if request.method == 'POST':
         if validate_subreddit.is_create_subreddit_valid():
-            subreddit = validate_subreddit.create_subreddit()
-            messages.success(request, 'You just created a subreddit!')
-            return redirect('/subreddit/' + str(subreddit.id))
+
+            if subreddits.filter(slug=request.POST['slug']).exists():
+                messages.error(request, 'Slug is already taken')
+                return redirect('create_sub')
+            else: 
+                subreddit = validate_subreddit.create_subreddit()
+                messages.success(request, 'You just created a subreddit!')
+                return redirect('/s/' + str(subreddit))
         else:
             messages.error(request, 'All fields are required to create a subreddit') 
-            return redirect(request, 'create_sub') 
+            return redirect('create_sub') 
     else: 
         return render(request, 'subreddits/create_sub.html')
 
@@ -71,4 +98,4 @@ def delete_sub(request, subreddits_id):
         return redirect('index')
     else:
         messages.error(request, 'Permission Denied')
-        return redirect('/subreddit/' + str(subreddit.id))
+        return redirect('/s/' + str(subreddit))

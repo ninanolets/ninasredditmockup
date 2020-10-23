@@ -2,11 +2,11 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-	path('post/<int:posts_id>', views.post, name='post'), 
-    path('post/create', views.create, name='create'), 
+    path('s/<slug:slug>/post/<int:posts_id>', views.post, name='post'), 
+    path('s/<slug:slug>/post/create', views.create, name='create'), 
+    path('post/create', views.create_from_index, name='create_from_index'), 
     path('post/delete/<int:posts_id>', views.delete_post, name='delete_post'),
-    path('post/', include('comments.urls')),
-    path('post/', include('commupvotes.urls')),
+    path('s/<slug:slug>/post/', include('comments.urls')),
+    path('s/<slug:slug>/post/', include('commupvotes.urls')),
     path('post/', include('postupvotes.urls')),
 ]

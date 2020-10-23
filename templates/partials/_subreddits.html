@@ -9,7 +9,7 @@
 
 	<!-- All communites from DB -->
 	{% for subreddit in subreddits %}
-	<a class="growing-pos no-link bg-white py-3 px-4 row m-0 border-top font-weight-light" href="{% url 'subreddit' subreddit.id %}">
+	<a class="growing-pos no-link bg-white py-3 px-4 row m-0 border-top font-weight-light" href="{% url 'subreddit' subreddit %}">
 		<img src="{% static 'img/up.png' %}" class=" pr-3 align-self-center" height="15">
 		<img class="fit bg-white border rounded-circle" height="40" width="40"
 			{% if subreddit.avatar %} src="{{ subreddit.avatar.url }}"

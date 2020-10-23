@@ -1,9 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
-	path('<int:subreddits_id>', views.subreddit, name='subreddit'), 
+	path('', views.index, name='index'),
+	path('s/<slug:slug>', views.subreddit, name='subreddit'), 
+	path('', include('posts.urls')),
 	path('all_subreddits', views.all_subreddits, name='all_subreddits'),
-	path('create', views.create, name='create_sub'),
-	path('delete/<int:subreddits_id>', views.delete_sub, name='delete_sub'),
+	path('create_sub', views.create, name='create_sub'),
+	path('delete_sub/<int:subreddits_id>', views.delete_sub, name='delete_sub'),
 ]

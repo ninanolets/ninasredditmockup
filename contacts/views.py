@@ -27,14 +27,14 @@ def contact(request):
 
         contact.save()
 
-        # send email after form is saved
-        send_mail(
-            'A user just made contact!',
-            'User ' + name + ' (' +  email + ') wants to talk to the team. Sign in to the Admin Panel for more info.',
-            'marinaa.noleto@gmail.com',
-            ['test@gmail.com', 'test@gmail.com'], # list of other emails to send the message
-            fail_silently=False
-        )
+        # # send email after form is saved
+        # send_mail(
+        #     'A user just made contact!',
+        #     'User ' + name + ' (' +  email + ') wants to talk to the team. Sign in to the Admin Panel for more info.',
+        #     'marinaa.noleto@gmail.com',
+        #     ['test@gmail.com', 'test@gmail.com'], # list of other emails to send the message
+        #     fail_silently=False
+        # )
 
         messages.success(request, mark_safe('Your message was successifully sent.<br/> Nina\'s Reddit Team will get back to you soon.'))
 

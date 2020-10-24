@@ -11,6 +11,7 @@ class ValidatePost():
         post = Post() 
         
         post.pub_date = timezone.datetime.now()
+        post.update_date = timezone.datetime.now()
         post.user = self.request.user
 
         post.title = self.request.POST['title'] 

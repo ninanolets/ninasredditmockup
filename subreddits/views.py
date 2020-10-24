@@ -99,3 +99,33 @@ def delete_sub(request, subreddits_id):
     else:
         messages.error(request, 'Permission Denied')
         return redirect('/s/' + str(subreddit))
+
+@login_required(login_url='/accounts/login')
+def update_sub(request, slug):
+    subreddit = get_object_or_404(Subreddit, slug=slug)    
+
+    context = { 
+        'subreddit': subreddit,
+    }
+
+    validate_subreddit = ValidateSubreddit(request)
+
+    if request.method == 'POST':
+        if request.POST['title'] and request.POST['content'] and request.FILES['photo']:
+
+            subreddit.slug = request.POST['slug'] 
+            subreddit.title = request.POST['title'] 
+            subreddit.description = request.POST['content']
+            # subreddit.photo = request.FILES['photo'] 
+        
+            try:
+                subreddit.avatar = request.FILES['avatar']
+            except:
+                subreddit.avatar = request.POST.get('avatar', False)
+            
+            subreddit.save()
+            return redirect('/s/' + slug)
+        return redirect('/s/' + slug)
+    return render(request, 'subreddits/update_sub.html', context)
+        
+

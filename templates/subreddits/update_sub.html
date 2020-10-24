@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} | Edit Subreddit {% endblock  %}
+
+{% block content %}
+
+<div class="container col-6"> 
+<!-- Alerts -->
+<br>{% include 'partials/_alerts.html' %}
+
+	<br><h1>Edit your subreddit</h1><br>
+	<form method="POST" action="{% url 'update_sub' subreddit.slug %}" enctype="multipart/form-data">
+		{% csrf_token %} <!-- security measure - always include -->
+	
+		<div class="form-group">
+			Subreddit name (slug):
+			<input type="text" name="slug" class="form-control" value="{{ subreddit.slug }}" required>
+		</div>
+        <div class="form-group">
+			Title:
+			<input type="text" name="title" class="form-control" value="{{ subreddit.title }}" required>
+		</div>
+        <div class="form-group">
+			Description:
+			<textarea type="textbox" name="content" class="form-control" required>{{ subreddit.description }}</textarea>
+		</div>
+        <div class="form-group">
+			Background Image:
+			<input type="file" name="photo" required> 
+		</div>
+        <div class="form-group">
+			Avatar (optional):
+			<input type="file" name="avatar">
+		</div>
+        
+
+        <br><input type="submit" value="Update" class="btn btn-danger">
+        <br><br>
+    </form>
+</div>
+{% endblock %}
+
+	
+		
+		
+	

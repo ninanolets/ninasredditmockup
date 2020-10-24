@@ -45,10 +45,17 @@
 			<p class="pl-4 m-0 font-weight-light">{{ post.custom_title }}</p>
 
 			{% if user.is_authenticated and user == post.user %}				
-					<a class="no-link btn btn-danger py-0 ml-auto" href="/post/delete/{{ post.id }}">Delete Post</a>
+					
+					<a class="no-link btn btn-info py-0 ml-auto" href="/s/{{ post.subreddit }}/post/{{ post.id }}/update_post">Update Post</a>
+					<form id="update_post" method="POST" action="{% url 'update_post' post.subreddit post.id %}">
+							{% csrf_token %}<input type="hidden">
+					</form>
+					
+					<a class="no-link btn btn-danger py-0 ml-3" href="/post/delete/{{ post.id }}">Delete Post</a>
 					<form id="delete_post" method="POST" action="{% url 'delete_post' post.id %}">
 							{% csrf_token %}<input type="hidden">
 					</form>
+
 			{% endif %}
 		
 		</div>
@@ -89,7 +96,10 @@
 							<img class="mx-auto d-block pr-0 mw-100" src="{{ post.photo.url }}">
 							{% endif %}
 							{% if post.content %}
-							<p class="pt-4 pr-5"> {{ post.content }}</p>
+							<p class="pt-4 mx-3"> {{ post.content }}</p>
+							{% endif %}
+							{% if post.compare_pub_date != post.compare_update_date %}
+							<p class="mx-3"><small>This post was edited</small></p>
 							{% endif %}
 							<div class="mt-5">
 								<!-- Comments -->

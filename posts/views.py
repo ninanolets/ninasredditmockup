@@ -8,7 +8,6 @@ from comments.models import Comment
 from postupvotes.models import Postupvote
 from commupvotes.models import Commupvote
 
-
 from django.utils import timezone 
 from posts.validate_post import ValidatePost
 
@@ -21,7 +20,7 @@ def post(request, posts_id, slug):
     comments = Comment.objects.filter(post_id=posts_id).order_by('-pub_date')
     has_user_voted = Postupvote.objects.filter(post_id=posts_id, user_id=request.user.id).exists()
     has_user_voted_comm = Commupvote.objects.filter(user_id=request.user.id)
-
+    
     context = {
 		'post': post,
         'subreddit': subreddit,
@@ -82,7 +81,6 @@ def create_from_index_2(request):
         return render(request, 'posts/create_from_index.html')
 
 
-
 @login_required(login_url='/accounts/login')
 def delete_post(request, posts_id):
     post = get_object_or_404(Post, pk=posts_id)
@@ -91,6 +89,33 @@ def delete_post(request, posts_id):
     messages.success(request, 'Successfully Deleted')
     return redirect('index')
 
+@login_required(login_url='/accounts/login')
+def update_post(request, slug, posts_id):
+    post = get_object_or_404(Post, pk=posts_id)
+    subreddit = get_object_or_404(Subreddit, slug=slug)    
 
-    
+    context = { 
+        'subreddit': subreddit,
+        'post': post,
+    }
+
+    validate_post = ValidatePost(request)
+
+    if request.method == 'POST':
+        if request.POST['title'] and (request.POST['content'] or request.FILES['photo']):
+
+            post.title = request.POST['title']
+            post.content = request.POST['content']
+            try:
+                post.photo = request.FILES['photo']
+            except:
+                post.photo = request.POST.get('photo', False)
+
+            post.update_date = timezone.datetime.now()
+
+            post.save()
+            return redirect('/s/' + slug + '/post/' + str(posts_id))
+        return redirect('/s/' + slug + '/post/' + str(posts_id))
+    return render(request, 'posts/update_post.html', context)
+        
 

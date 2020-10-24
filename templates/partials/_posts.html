@@ -34,10 +34,10 @@
 			<div class="p-2">
 				
 				{% if post.photo %}
-					<a class="no-link" href="{% url 'post' post.subreddit.slug post.id %}"><img class="bg-image rounded fit" height="95" width="135" src="{{ post.photo.url }}"></a>
+					<a class="no-link" href="{% url 'post' post.subreddit post.id %}"><img class="bg-image rounded fit" height="95" width="135" src="{{ post.photo.url }}"></a>
 				{% else %} 
 					<div class="bg-light py-4 px-5 rounded">
-						<a class="no-link" href="{% url 'post' post.subreddit.slug post.id %}"><img class="bg-image" src="{% static 'img/paper-plane.png' %}" alt="Paper plane" width="40" height="40"></a>
+						<a class="no-link" href="{% url 'post' post.subreddit post.id %}"><img class="bg-image" src="{% static 'img/paper-plane.png' %}" alt="Paper plane" width="40" height="40"></a>
 					</div>
 				{% endif %}		
 			</div>

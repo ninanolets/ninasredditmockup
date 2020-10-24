@@ -11,6 +11,7 @@ from django.db.models import Count
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import re
 
 
 def index(request):
@@ -74,8 +75,10 @@ def create_2(request):
 
     if request.method == 'POST':
         if validate_subreddit.is_create_subreddit_valid():
+            
+            slug = re.sub('\s', '_', request.POST['slug'])
 
-            if subreddits.filter(slug=request.POST['slug']).exists():
+            if subreddits.filter(slug=slug).exists():
                 messages.error(request, 'Slug is already taken')
                 return redirect('create_sub')
             else: 
@@ -113,11 +116,8 @@ def update_sub(request, slug):
     if request.method == 'POST':
         if request.POST['title'] and request.POST['content'] and request.FILES['photo']:
 
-            subreddit.slug = request.POST['slug'] 
             subreddit.title = request.POST['title'] 
-            subreddit.description = request.POST['content']
-            # subreddit.photo = request.FILES['photo'] 
-        
+            subreddit.description = request.POST['content']        
             try:
                 subreddit.avatar = request.FILES['avatar']
             except:

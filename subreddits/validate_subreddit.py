@@ -1,5 +1,6 @@
 from .models import Subreddit
 from django.utils import timezone
+import re
 
 class ValidateSubreddit():
     def __init__(self, request):
@@ -8,7 +9,8 @@ class ValidateSubreddit():
     def create_subreddit(self):
         subreddit = Subreddit() 
 
-        subreddit.slug = self.request.POST['slug'] 
+        subreddit.slug = re.sub('\s', '_', self.request.POST['slug'])
+        
         subreddit.title = self.request.POST['title'] 
         subreddit.description = self.request.POST['content']
         subreddit.photo = self.request.FILES['photo'] 

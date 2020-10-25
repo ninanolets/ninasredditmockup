@@ -4,17 +4,17 @@
 
 {% block content %}
 
-<div class="container"> 
-	<div class="mx-auto col-5">
+<div class="container">
+	<div class="col-10 m-auto">
 
 		<!-- Alerts -->
 		<br>{% include 'partials/_alerts.html' %}
 
 		<br><h1>Welcome, {{ user }}</h1><br>
 		
-		<div class="p-2 mb-4 mr-5 border rounded bg-white w-80">
+		<div class="mb-4 border rounded bg-white">
 				<div class="col-11">
-					<div class="text-secondary pr-3 br-line">
+					<div class="text-secondary">
 							<table class="table">
 								<thead>
 									<tr>
@@ -47,5 +47,4 @@
 		<br><br>
 	</div>
 </div>
-
 {% endblock  %}

@@ -8,4 +8,4 @@ class Commupvote(models.Model):
     comment = models.ForeignKey(Comment, related_name="upvotes", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id
+        return str(self.id)

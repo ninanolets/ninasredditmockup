@@ -9,7 +9,7 @@ class Postupvote(models.Model):
     # {{ post.upvotes }}
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     
     

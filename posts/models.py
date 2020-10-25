@@ -15,7 +15,7 @@ class Post(models.Model):
     update_date = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
-        return self.title or ''
+        return str(self.title) or ''
 
     def custom_pub_date(self):
         return self.pub_date.strftime('%e %b %Y')

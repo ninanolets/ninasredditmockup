@@ -4,45 +4,48 @@
 
 {% block content %}
 
-<div class="container"><br>
-<!-- Alerts -->
-{% include 'partials/_alerts.html' %}
+<div class="container"> 
+	<div class="mx-auto col-5">
 
-	<br><h1>Welcome, {{ user }}</h1><br>
-    
-    <div class="p-2 mb-4 mr-5 border rounded bg-white w-80">
-			<div class="col-11">
-				<div class="text-secondary pr-3 br-line">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">Date</th>
-									<th scope="col">Messages sent</th>
-								</tr>
-							</thead>
-							{% if contacts %}
-								{% for contact in contacts %}
-							<tbody>
-								<tr>
-									<td>{{ contact.contact_date }}</td>
-									<td>{{ contact.custom_message }}</td>
-								</tr>
-							</tbody>
-								{% endfor %}
-							{% else %}    
-							<tbody>
-								<tr>
-									<td></td>
-									<td>You did not send us any messages yet</td>
-								</tr>
-							</tbody>
-							{% endif %}
-						</table>
+		<!-- Alerts -->
+		<br>{% include 'partials/_alerts.html' %}
+
+		<br><h1>Welcome, {{ user }}</h1><br>
+		
+		<div class="p-2 mb-4 mr-5 border rounded bg-white w-80">
+				<div class="col-11">
+					<div class="text-secondary pr-3 br-line">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">Date</th>
+										<th scope="col">Messages sent</th>
+									</tr>
+								</thead>
+								{% if contacts %}
+									{% for contact in contacts %}
+								<tbody>
+									<tr>
+										<td>{{ contact.contact_date }}</td>
+										<td>{{ contact.custom_message }}</td>
+									</tr>
+								</tbody>
+									{% endfor %}
+								{% else %}    
+								<tbody>
+									<tr>
+										<td></td>
+										<td>You did not send us any messages yet</td>
+									</tr>
+								</tbody>
+								{% endif %}
+							</table>
+					</div>
 				</div>
 			</div>
-		</div>
 
-	<br><br>
+		<br><br>
+	</div>
 </div>
 
 {% endblock  %}

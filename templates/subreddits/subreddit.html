@@ -8,79 +8,80 @@
 {% block content %}
 
 <!-- Top bar Subreddit -->
-<div class="bg-image">
-	<img class="w-100 fit" height="100" src="{{ subreddit.photo.url }}" alt="">
-</div>
+<div class="container">
+	<div class="bg-image">
+		<img class="w-100 fit" height="200" src="{{ subreddit.photo.url }}" alt="">
+	</div>
 
-<div class="px-5 bg-white">
-	<div class="d-flex">
-		<img class="border rounded-circle border-white growing-pos bg-white mb-2 fit" height="100" width="100"
-		{% if subreddit.avatar %} src="{{ subreddit.avatar.url }}"
-		{% else %} src="{% static 'img/avatar-gray.png' %}"
-		{% endif %}>
-		<div class="mt-4 mb-2 pl-3 d-flex w-100">
-			<div class="pr-5">
-				<h1>{{ subreddit.title }}</h1>
-				<h5 class="font-weight-normal text-secondary">/{{ subreddit.slug }}</h5>
+	<div class="px-5 bg-white">
+		<div class="d-flex">
+			<img class="border rounded-circle border-white growing-pos bg-white mb-2 fit" height="100" width="100"
+			{% if subreddit.avatar %} src="{{ subreddit.avatar.url }}"
+			{% else %} src="{% static 'img/avatar-gray.png' %}"
+			{% endif %}>
+			<div class="mt-4 mb-2 pl-3 d-flex w-100">
+				<div class="pr-5">
+					<h1>{{ subreddit.title }}</h1>
+					<h5 class="font-weight-normal text-secondary">/{{ subreddit.slug }}</h5>
+				</div>
+				<!-- Make if statement to change button from 'Leave' to 'Joined' when user is part of the forum -->
+				{% comment %} <button class="align-self-start btn btn-outline-dark btn-lg font-weight-light col-2" type="button" href="#">Leave</button> {% endcomment %}
+
 			</div>
-			<!-- Make if statement to change button from 'Leave' to 'Joined' when user is part of the forum -->
-			{% comment %} <button class="align-self-start btn btn-outline-dark btn-lg font-weight-light col-2" type="button" href="#">Leave</button> {% endcomment %}
-
 		</div>
 	</div>
-</div>
 
-<!-- Flex box -->
-<div class="d-flex justify-content-between m-4">
-  <div class="container col-8 pl-0 pr-4">
+	<!-- Flex box -->
+	<div class="d-flex my-4 mx-auto">
+		<div class="container col-8 pl-0 pr-4">
 
-    <!-- Breadcrumbs -->
-    <div class="p-2 mb-4 border rounded bg-white text-center">
-		<a class="d-inline-block align-top mr-3" href="{% url 'index' %}">
-			<img src="{% static 'img/reddit-logo-gray.png' %}" class="logo px-2 my-2" alt="reddit logo" height="40" >
-		</a>
-		<a class="btn btn-light col-10 text-left btn-lg my-1 mx-1 mr-3 font-weight-light" href="{% url 'create' subreddit.slug %}">Create Post</a>
-	</div>
-
+			<!-- Breadcrumbs -->
+			<div class="p-2 mb-4 border rounded bg-white text-center">
+				<a class="d-inline-block align-top mr-3" href="{% url 'index' %}">
+					<img src="{% static 'img/reddit-logo-gray.png' %}" class="logo px-2 my-2" alt="reddit logo" height="40" >
+				</a>
+				<a class="btn btn-light col-10 text-left btn-lg my-1 mx-1 mr-3 font-weight-light" href="{% url 'create' subreddit.slug %}">Create Post</a>
+			</div>
 
 
-	<!-- Alerts -->
-	{% include 'partials/_alerts.html' %}
-    <!-- Forum posts from DB -->
-	{% include 'partials/_posts.html' %}
 
-  </div>
+			<!-- Alerts -->
+			{% include 'partials/_alerts.html' %}
+			<!-- Forum posts from DB -->
+			{% include 'partials/_posts.html' %}
 
-	
-	<!-- About Subreddit -->
-	<div class="container col-4 p-0 rounded bg-white align-self-start">
-		<div class="p-0 rounded-top bg-info d-flex" width="100%" >
-			<h5 class="p-3 let-sp m-0" height="">About Community</h5>
 		</div>
-		<div class="px-4 pt-4">
-			<p class="pb-2">{{ subreddit.description }}</p>
-			<h6 class="font-weight-light border-top pt-3 m-0"><img class="mr-2" src="{% static 'img/cakeday.png' %}" height="30">Created {{ subreddit.custom_pub_date }}</h6>
+
+		
+		<!-- About Subreddit -->
+		<div class="container col-4 p-0 rounded bg-white align-self-start">
+			<div class="p-0 rounded-top bg-info d-flex" width="100%" >
+				<h5 class="p-3 let-sp m-0" height="">About Community</h5>
+			</div>
+			<div class="px-4 pt-4">
+				<p class="pb-2">{{ subreddit.description }}</p>
+				<h6 class="font-weight-light border-top pt-3 m-0"><img class="mr-2" src="{% static 'img/cakeday.png' %}" height="30">Created {{ subreddit.custom_pub_date }}</h6>
+			</div>
+		<div class="py-3 px-4">
+		<a class="btn btn-info col-12 text-uppercase font-weight-bold" type="button" href="{% url 'create' subreddit.slug %}">Create Post</a> <!-- href="/s/{{ subreddit.slug }}/post/create" -->
 		</div>
-    <div class="py-3 px-4">
-      <a class="btn btn-info col-12 text-uppercase font-weight-bold" type="button" href="{% url 'create' subreddit.slug %}">Create Post</a> <!-- href="/s/{{ subreddit.slug }}/post/create" -->
-    </div>
-	{% if user.is_authenticated and user == subreddit.user %}
-	<div class="d-flex float-right pr-4 mb-3">
-		<a class="no-link btn btn-info mr-2" href="/s/{{ subreddit.slug }}/update_sub">Edit Sub</a>
-		<form id="update_sub" method="POST" action="{% url 'update_sub' subreddit.slug %}">
+		{% if user.is_authenticated and user == subreddit.user %}
+		<div class="d-flex float-right pr-4 mb-3">
+			<a class="no-link btn btn-info mr-2" href="/s/{{ subreddit.slug }}/update_sub">Edit Sub</a>
+			<form id="update_sub" method="POST" action="{% url 'update_sub' subreddit.slug %}">
+					{% csrf_token %}<input type="hidden">
+			</form>
+
+			<a class="no-link btn btn-danger text-white" href="/delete_sub/{{ subreddit.id }}">Delete Sub</a>
+			<form id="delete_sub" method="DELETE" action="{% url 'delete_sub' subreddit.id %}">
 				{% csrf_token %}<input type="hidden">
-		</form>
-
-		<a class="no-link btn btn-danger text-white" href="/delete_sub/{{ subreddit.id }}">Delete Sub</a>
-		<form id="delete_sub" method="DELETE" action="{% url 'delete_sub' subreddit.id %}">
-			{% csrf_token %}<input type="hidden">
-		</form>
+			</form>
+		</div>
+		{% endif %}
+		
 	</div>
-	{% endif %}
-	
-  </div>
+	</div>
 </div>
-
 <!-- Pagination -->
 {% include 'partials/_pagination.html' %}
 

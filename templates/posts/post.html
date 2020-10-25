@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<div class="container p-0">
+<div class="container">
 	<div class="bg-gray px-5">
 		<div class="d-flex">
 			<img class="border rounded-circle border-white border-10 bg-white my-3 fit" height="50" width="50"
@@ -60,12 +60,12 @@
 		
 		</div>
 
-		<div class="bg-gray-2 px-5 py-4">
+		<div class="bg-gray-2 px-5 py-4 min-vh-100">
 			<div class="col-10 p-0">
 				<!-- Alerts -->
 				{% include 'partials/_alerts.html' %}
 			</div>
-			<div class="p-3 border rounded bg-white col-10">
+			<div class="p-3 border rounded bg-white col-10 min-vh-100">
 				<div class="d-flex w-100">
 					<div class="flex-shrink-1 pr-4 d-flex flex-column align-items-center justify-content-start">
 
@@ -96,7 +96,7 @@
 							<img class="mx-auto d-block pr-0 mw-100" src="{{ post.photo.url }}">
 							{% endif %}
 							{% if post.content %}
-							<p class="pt-4 mx-3"> {{ post.content }}</p>
+							<p class="pt-4 mx-3"> {{ post.content | linebreaks }}</p>
 							{% endif %}
 							{% if post.compare_pub_date != post.compare_update_date %}
 							<p class="mx-3"><small>This post was edited</small></p>

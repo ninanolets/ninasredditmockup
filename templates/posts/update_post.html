@@ -4,29 +4,32 @@
 
 {% block content %}
 
-<div class="container col-6"> 
-<!-- Alerts -->
-<br>{% include 'partials/_alerts.html' %}
+<div class="container"> 
+	<div class="mx-auto col-5">
 
-	<br><h1>Edit your post</h1><br>
-	<form method="POST" action="{% url 'update_post' subreddit post.id %}" enctype="multipart/form-data">
-		{% csrf_token %} <!-- security measure - always include -->
-	
-		<div class="form-group">
-			Post title:
-			<input type="text" name="title" class="form-control" value="{{ post.title }}" required>
-		</div>
-		<div class="form-group">
-			Content:
-			<textarea type="textbox" name="content" class="form-control texta" style="height:200px;" required>{{ post.content }}</textarea>
-		</div>
-		<div class="form-group">
-			Image (optional):
-			<input type="file" name="photo">
+		<!-- Alerts -->
+		<br>{% include 'partials/_alerts.html' %}
 
-		</div>
+		<br><h1>Edit your post</h1><br>
+		<form method="POST" action="{% url 'update_post' subreddit post.id %}" enctype="multipart/form-data">
+			{% csrf_token %} <!-- security measure - always include -->
+		
+			<div class="form-group">
+				Post title:
+				<input type="text" name="title" class="form-control" value="{{ post.title }}" required>
+			</div>
+			<div class="form-group">
+				Content:
+				<textarea type="textbox" name="content" class="form-control texta" style="height:200px;" required>{{ post.content }}</textarea>
+			</div>
+			<div class="form-group">
+				Image (optional):
+				<input type="file" name="photo">
 
-		<br><input type="submit" value="Update" class="btn btn-danger">
-	</form><br><br>
+			</div>
+
+			<br><input type="submit" value="Update" class="btn btn-danger">
+		</form><br><br>
+	</div>
 </div>
 {% endblock %}

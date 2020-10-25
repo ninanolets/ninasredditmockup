@@ -4,41 +4,45 @@
 
 {% block content %}
 
-<div class="container col-6"><br>
-<!-- Alerts -->
-{% include 'partials/_alerts.html' %}
 
-	<!-- Contacts -->
-	<br><h2>CONTACT US</h2><br>
+<div class="container"> 
+	<div class="mx-auto col-5">
 
-	<form method="POST" action="{% url 'contact' %}">
-		{% csrf_token %} <!-- security measure - always include -->
-		{% comment %} {% if user.is_authenticated %}
-		<input type="hidden" name="user_id" value="{{ user.id }}">
-		{% else %}
-		<input type="hidden" name="user_id" value="0">
-		{% endif %} {% endcomment %}
-		<input type="hidden" name="user_id" value="{{ user.id }}">
-		<div class="form-group">
-			Name:
-			<input type="text" name="name" class="form-control" value="{{ user.username }}" required>
-		</div>		
-		<div class="form-group">
-			Email:
-			<input type="email" name="email" class="form-control" value="{{ user.email }}" required>
-		</div>		
-		<div class="form-group">
-			Phone:
-			<input type="text" name="phone" class="form-control">
-		</div>		
-		<div class="form-group">
-			Message:
-			<textarea type="textbox" name="message" class="form-control"></textarea>
-		</div>		
+		<!-- Alerts -->
+		<br>{% include 'partials/_alerts.html' %}
 
-		<br><input type="submit" value="Send" class="btn btn-info col-4">
-	</form>
-	<br><br>
+		<!-- Contacts -->
+		<br><h2>CONTACT US</h2><br>
+
+		<form method="POST" action="{% url 'contact' %}">
+			{% csrf_token %} <!-- security measure - always include -->
+			{% comment %} {% if user.is_authenticated %}
+			<input type="hidden" name="user_id" value="{{ user.id }}">
+			{% else %}
+			<input type="hidden" name="user_id" value="0">
+			{% endif %} {% endcomment %}
+			<input type="hidden" name="user_id" value="{{ user.id }}">
+			<div class="form-group">
+				Name:
+				<input type="text" name="name" class="form-control" value="{{ user.username }}" required>
+			</div>		
+			<div class="form-group">
+				Email:
+				<input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+			</div>		
+			<div class="form-group">
+				Phone:
+				<input type="text" name="phone" class="form-control">
+			</div>		
+			<div class="form-group">
+				Message:
+				<textarea type="textbox" name="message" class="form-control"></textarea>
+			</div>		
+
+			<br><input type="submit" value="Send" class="btn btn-info col-4">
+		</form>
+		<br><br>
+	</div>
 </div>
 
 {% endblock  %}

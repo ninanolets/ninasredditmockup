@@ -4,39 +4,42 @@
 
 {% block content %}
 
-<br><div class="container col-6">
-<!-- Alerts -->
-{% include 'partials/_alerts.html' %}
+<div class="container"> 
+	<div class="mx-auto col-6">
 
-    <br><h1>Create your subreddit</h1><br>
+		<!-- Alerts -->
+		<br>{% include 'partials/_alerts.html' %}
 
-    <form method="POST" action="{% url 'create_sub' %}" enctype="multipart/form-data">
-        {% csrf_token %} <!-- security measure - always include -->
-        <div class="form-group">
-			Subreddit name (slug):
-			<input type="text" name="slug" class="form-control" required>
-		</div>
-        <div class="form-group">
-			Title:
-			<input type="text" name="title" class="form-control" required>
-		</div>
-        <div class="form-group">
-			Description:
-			<textarea type="textbox" name="content" class="form-control" required></textarea>
-		</div>
-        <div class="form-group">
-			Background Image:
-			<input type="file" name="photo" required>
-		</div>
-        <div class="form-group">
-			Avatar (optional):
-			<input type="file" name="avatar">
-		</div>
-        
+		<br><h1>Create your subreddit</h1><br>
 
-        <br><input type="submit" value="Create Subreddit" class="btn btn-danger">
-        <br><br>
-    </form>
+		<form method="POST" action="{% url 'create_sub' %}" enctype="multipart/form-data">
+			{% csrf_token %} <!-- security measure - always include -->
+			<div class="form-group">
+				Subreddit name (slug):
+				<input type="text" name="slug" class="form-control" required>
+			</div>
+			<div class="form-group">
+				Title:
+				<input type="text" name="title" class="form-control" required>
+			</div>
+			<div class="form-group">
+				Description:
+				<textarea type="textbox" name="content" class="form-control" required></textarea>
+			</div>
+			<div class="form-group">
+				Background Image:
+				<input type="file" name="photo" required>
+			</div>
+			<div class="form-group">
+				Avatar (optional):
+				<input type="file" name="avatar">
+			</div>
+			
+
+			<br><input type="submit" value="Create Subreddit" class="btn btn-danger">
+			<br><br>
+		</form>
+	</div>
 </div>
 {% endblock %}
 

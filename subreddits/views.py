@@ -117,7 +117,8 @@ def update_sub(request, slug):
         if request.POST['title'] and request.POST['content'] and request.FILES['photo']:
 
             subreddit.title = request.POST['title'] 
-            subreddit.description = request.POST['content']        
+            subreddit.description = request.POST['content']   
+            subreddit.photo = request.FILES['photo']     
             try:
                 subreddit.avatar = request.FILES['avatar']
             except:

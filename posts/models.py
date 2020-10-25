@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from subreddits.models import Subreddit
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
     subreddit = models.ForeignKey(Subreddit, related_name="sub_posts", on_delete=models.CASCADE)
     
     title = models.CharField(max_length=150)

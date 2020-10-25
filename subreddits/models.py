@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Subreddit(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
     slug = models.SlugField(max_length=30)
     # slug = AutoSlugField(populate_from='title', always_update=True)
 

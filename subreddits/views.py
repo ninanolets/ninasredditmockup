@@ -84,7 +84,7 @@ def create_2(request):
             else: 
                 subreddit = validate_subreddit.create_subreddit()
                 messages.success(request, 'You just created a subreddit!')
-                return redirect('/s/' + str(subreddit))
+                return redirect('/s/' + str(slug))
         else:
             messages.error(request, 'All fields are required to create a subreddit') 
             return redirect('create_sub') 

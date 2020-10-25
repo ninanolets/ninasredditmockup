@@ -8,29 +8,29 @@
 {% block content %}
 
 <!-- Top bar Subreddit -->
-<div class="container">
-	<div class="bg-image">
-		<img class="w-100 fit" height="200" src="{{ subreddit.photo.url }}" alt="">
-	</div>
 
-	<div class="px-5 bg-white">
-		<div class="d-flex">
-			<img class="border rounded-circle border-white growing-pos bg-white mb-2 fit" height="100" width="100"
-			{% if subreddit.avatar %} src="{{ subreddit.avatar.url }}"
-			{% else %} src="{% static 'img/avatar-gray.png' %}"
-			{% endif %}>
-			<div class="mt-4 mb-2 pl-3 d-flex w-100">
-				<div class="pr-5">
-					<h1>{{ subreddit.title }}</h1>
-					<h5 class="font-weight-normal text-secondary">/{{ subreddit.slug }}</h5>
-				</div>
-				<!-- Make if statement to change button from 'Leave' to 'Joined' when user is part of the forum -->
-				{% comment %} <button class="align-self-start btn btn-outline-dark btn-lg font-weight-light col-2" type="button" href="#">Leave</button> {% endcomment %}
+<div class="bg-image w-100">
+	<img class="w-100 fit" height="200" src="{{ subreddit.photo.url }}" alt="">
+</div>
 
+<div class="px-5 bg-white">
+	<div class="d-flex container">
+		<img class="border rounded-circle border-white growing-pos bg-white mb-2 fit" height="100" width="100"
+		{% if subreddit.avatar %} src="{{ subreddit.avatar.url }}"
+		{% else %} src="{% static 'img/avatar-gray.png' %}"
+		{% endif %}>
+		<div class="mt-4 mb-2 pl-3 d-flex w-100">
+			<div class="pr-5">
+				<h1>{{ subreddit.title }}</h1>
+				<h5 class="font-weight-normal text-secondary">/{{ subreddit.slug }}</h5>
 			</div>
+			<!-- Make if statement to change button from 'Leave' to 'Joined' when user is part of the forum -->
+			{% comment %} <button class="align-self-start btn btn-outline-dark btn-lg font-weight-light col-2" type="button" href="#">Leave</button> {% endcomment %}
+
 		</div>
 	</div>
-
+</div>
+<div class="container">
 	<!-- Flex box -->
 	<div class="d-flex my-4 mx-auto">
 		<div class="container col-8 pl-0 pr-4">

@@ -76,7 +76,7 @@ def create_2(request):
     if request.method == 'POST':
         if validate_subreddit.is_create_subreddit_valid():
             
-            slug = re.sub('\s', '_', request.POST['slug'])
+            slug = re.sub('[^a-zA-Z0-9\.]', '_', request.POST['slug'])
 
             if subreddits.filter(slug=slug).exists():
                 messages.error(request, 'Slug is already taken')

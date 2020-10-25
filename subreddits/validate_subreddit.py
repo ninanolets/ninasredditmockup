@@ -9,7 +9,7 @@ class ValidateSubreddit():
     def create_subreddit(self):
         subreddit = Subreddit() 
 
-        subreddit.slug = re.sub('\s', '_', self.request.POST['slug'])
+        subreddit.slug = re.sub('[^a-zA-Z0-9\.]', '_', self.request.POST['slug'])
         
         subreddit.title = self.request.POST['title'] 
         subreddit.description = self.request.POST['content']

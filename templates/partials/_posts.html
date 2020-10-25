@@ -44,7 +44,8 @@
 			<div class="p-2 br-line">
 				<a class="no-link" href="{% url 'post' post.subreddit post.id %}">
 					<h5 class="font-weight-normal m-0">{{ post.title }}</h5>
-					<a class="pr-2" href="{% url 'subreddit' post.subreddit %}">/{{ post.subreddit }}</a>&middot;	Posted by <a class="pr-2 text-secondary no-link" href="">/{{ post.user }}</a><a class="text-secondary" href="{% url 'post' post.subreddit post.id %}">{{ post.pub_date | naturaltime }}</a>
+					<a class="pr-2" href="{% url 'subreddit' post.subreddit %}">/{{ post.subreddit }}</a>&middot;	Posted by <a class="pr-2 text-secondary no-link" href="">/{{ post.user }}</a>
+					<br><a class="text-secondary" href="{% url 'post' post.subreddit post.id %}">{{ post.pub_date | naturaltime }}</a>
 					<div class="pt-2">
 							<a class="no-link-highlight px-2 py-1" href="{% url 'post' post.subreddit post.id %}"><img class="mr-2" src="{% static 'img/comment.png' %}" width="20" height="20"> 
 							{{ post.commented.count }} Comment{% if post.commented.count == 1 %}</a>{% else %}s</a>{% endif %}							

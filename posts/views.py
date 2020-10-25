@@ -47,6 +47,19 @@ def create_2(request, slug):
 
     if request.method == 'POST':
         if validate_post.is_create_post_valid():
+
+            s_slug = request.POST['subreddit']
+            
+            if not Subreddit.objects.filter(slug=s_slug).exists():
+                messages.error(request, 'Subreddit does not exits')
+                return redirect('create_from_index')
+                
+            else:
+                post = validate_post.create_post()
+                return redirect('/s/' + slug + '/post/' + str(post.id))
+
+
+
             post = validate_post.create_post()
             return redirect('/s/' + slug + '/post/' + str(post.id))
         else: 
